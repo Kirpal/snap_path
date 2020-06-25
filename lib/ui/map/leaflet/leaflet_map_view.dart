@@ -67,23 +67,15 @@ class LeafletMapView extends StatelessWidget {
                   ),
                 ),
               ),
-            if (context.select<PathDrawingState, LatLng>((state) => state.highlightedPoint) != null)
-              Marker(
-                width: 15,
-                height: 15,
-                point: context.select<PathDrawingState, LatLng>((state) => state.highlightedPoint),
-                builder: (ctx) => Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 3, color: AppColors.primary),
-                  ),
-                )
+          ],
               ),
+        DrawHandleLayerOptions(),
+        MarkerLayerOptions(
+          markers: [
+            HighlightedPointMarker(context.select<PathDrawingState, ElevationPoint>((state) => state.highlightedPoint)),
           ],
         ),
-        DrawHandleLayerOptions(),
-      ]
+      ],
     );
   }
 }

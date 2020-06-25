@@ -1,5 +1,4 @@
 import 'package:charts_flutter/flutter.dart';
-import 'package:distance/distance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snap_path/ui/bottom_sheet/elevation_chart_placeholder.dart';
@@ -22,19 +21,17 @@ class ElevationChart extends StatelessWidget {
                 id: 'elevationChart',
                 data: elevation.filtered,
                 domainFn: (point, _) {
-                  var distance = Distance(micrometers: (point.distance * Distance.micrometersInMeter).round());
                   if (metric) {
-                    return distance.inKilometers;
+                    return point.distance.inKilometers;
                   } else {
-                    return distance.inMiles;
+                    return point.distance.inMiles;
                   }
                 },
                 measureFn: (point, _)  {
-                  var distance = Distance(micrometers: (point.elevation * Distance.micrometersInMeter).round());
                   if (metric) {
-                    return distance.inMeters;
+                    return point.elevation.inMeters;
                   } else {
-                    return distance.inFeet;
+                    return point.elevation.inFeet;
                   }
                 },
                 colorFn: (_, __) => chartColorFrom(Theme.of(context).primaryColor)

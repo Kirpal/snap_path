@@ -13,7 +13,7 @@ class PathDrawingState extends ChangeNotifier {
   Path _openPath = Path();
   ElevationData _totalElevation = ElevationData();
   Path _totalPath = Path();
-  LatLng highlightedPoint;
+  ElevationPoint highlightedPoint;
   final MapRepository _mapRepository;
   
   PathDrawingState({
@@ -128,7 +128,7 @@ class PathDrawingState extends ChangeNotifier {
 
   /// Highlight the point at the given distance (in meters)
   void highlightPoint(ElevationPoint point) {
-    highlightedPoint = point.coordinate;
+    highlightedPoint = point;
 
     notifyListeners();
   }

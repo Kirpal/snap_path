@@ -43,7 +43,7 @@ bool Function(ElevationData) elevationPred(PathData path) {
   return (ElevationData data) {
     if (data.unfiltered.length != path.elevations.length) return false;
     for (var i = 0; i < data.unfiltered.length; i++) {
-      if ((data.unfiltered[i].elevation - path.elevations[i]).abs() > path.elevations[i] * 0.05) return false;
+      if ((data.unfiltered[i].elevation.inMeters - path.elevations[i]).abs() > path.elevations[i] * 0.05) return false;
     }
 
     return true;

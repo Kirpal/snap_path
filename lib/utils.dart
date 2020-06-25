@@ -23,7 +23,7 @@ Future<void> shareGpx(List<ElevationPoint> points) async {
             trkpts: points.map((l) => Wpt(
               lat: l.coordinate.latitude,
               lon: l.coordinate.longitude,
-              ele: l.elevation,
+              ele: l.elevation.inMeters,
             )).toList()
           ),
         ],

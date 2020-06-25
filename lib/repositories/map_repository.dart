@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:distance/distance.dart' as d;
 import 'package:flutter/painting.dart';
 import 'package:latlong/latlong.dart';
 import 'package:http/http.dart';
@@ -157,8 +158,8 @@ class MapboxRepository implements MapRepository {
 
           var elevation = -10000 + ((p[0] * 256 * 256 + p[1] * 256 + p[2]) * 0.1);
           elevations.add(ElevationPoint(
-            distance: totalDistance,
-            elevation: elevation,
+            distance: d.Distance(micrometers: (totalDistance * d.Distance.micrometersInMeter).round()),
+            elevation: d.Distance(micrometers: (elevation * d.Distance.micrometersInMeter).round()),
             coordinate: coord,
           ));
         }
