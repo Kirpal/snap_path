@@ -32,7 +32,7 @@ Future<void> shareGpx(List<ElevationPoint> points) async {
 
   return WcFlutterShare.share(
     sharePopupTitle: 'Share GPX',
-    fileName: 'snap_path.gpx',
+    fileName: 'snappath.gpx',
     bytesOfFile: utf8.encode(GpxWriter().asString(gpx, pretty: true)),
     mimeType: 'application/gpx+xml'
   );
@@ -44,14 +44,14 @@ Future<String> generateShareLink(List<LatLng> coordinates) async {
     uriPrefix: 'https://snappath.page.link',
     link: Uri(
       scheme: 'https',
-      host: 'snappath.com',
+      host: 'snappath.kirp.al',
       pathSegments: [
         'route',
         Polyline.Encode(decodedCoords: coordinates.map((l) => [l.latitude, l.longitude]).toList()).encodedString
       ],
     ),
-    androidParameters: AndroidParameters(packageName: 'com.kirpal.snap_path'),
-    iosParameters: IosParameters(bundleId: 'com.kirpal.snap_path'),
+    androidParameters: AndroidParameters(packageName: 'com.kirpal.snappath'),
+    iosParameters: IosParameters(bundleId: 'com.kirpal.snappath', appStoreId: '1520117146'),
   );
 
   return (await linkParameters.buildShortLink()).shortUrl.toString();

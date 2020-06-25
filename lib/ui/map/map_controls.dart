@@ -10,40 +10,48 @@ import 'package:snap_path/ui/dialogs/share_dialog.dart';
 class MapControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.circular(100),
-        boxShadow: [
-          BoxShadow(blurRadius: 10, offset: Offset(0, 10), color: Colors.black.withOpacity(0.1))
-        ],
+    return Selector<AppState, bool>(
+      selector: (context, state) => state.controlsVisible,
+      builder: (context, visible, child) => AnimatedOpacity(
+        duration: Duration(milliseconds: 50),
+        opacity: visible ? 1 : 0,
+        child: child,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          MapControlButton(
-            enabled: context.select<AppState, bool>((s) => s.canGetLocation),
-            icon: FeatherIcons.crosshair,
-            onPressed: () => context.read<AppState>().goToUserLocation(),
-          ),
-          MapControlButton(
-            enabled: context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
-            icon: FeatherIcons.trash,
-            onPressed: () => context.read<PathDrawingState>().clear(),
-          ),
-          MapControlButton(
-            enabled: context.select<PathDrawingState, bool>((s) => s.canUndo),
-            icon: FeatherIcons.cornerUpLeft,
-            onPressed: () => context.read<PathDrawingState>().undo(),
-          ),
-          MapControlButton(
-            enabled: context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
-            icon: FeatherIcons.share,
-            onPressed: () => showDialog(context: context, builder: (context) => ShareDialog()),
-          ),
-        ],
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+        margin: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.circular(100),
+          boxShadow: [
+            BoxShadow(blurRadius: 10, offset: Offset(0, 10), color: Colors.black.withOpacity(0.1))
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            MapControlButton(
+              enabled: context.select<AppState, bool>((s) => s.canGetLocation),
+              icon: FeatherIcons.crosshair,
+              onPressed: () => context.read<AppState>().goToUserLocation(),
+            ),
+            MapControlButton(
+              enabled: context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
+              icon: FeatherIcons.trash,
+              onPressed: () => context.read<PathDrawingState>().clear(),
+            ),
+            MapControlButton(
+              enabled: context.select<PathDrawingState, bool>((s) => s.canUndo),
+              icon: FeatherIcons.cornerUpLeft,
+              onPressed: () => context.read<PathDrawingState>().undo(),
+            ),
+            MapControlButton(
+              enabled: context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
+              icon: FeatherIcons.share,
+              onPressed: () => showDialog(context: context, builder: (context) => ShareDialog()),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,25 +15,30 @@ class MapBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double headerHeight = 120 + mediaQuery.padding.bottom;
     double sheetHeight;
     double sheetWidth;
-    double sheetPadding;
+    EdgeInsets sheetPadding;
     EdgeInsets sheetCover;
 
     if (mediaQuery.size.width > 720 || mediaQuery.size.aspectRatio > 1.5) {
-      sheetPadding = 14;
-      sheetHeight = min(400, mediaQuery.size.height - sheetPadding - 120);
+      sheetPadding = EdgeInsets.only(top: 14, left: 14) + EdgeInsets.only(left: mediaQuery.padding.left);
+      sheetHeight = min(300, mediaQuery.size.height - sheetPadding.vertical - headerHeight);
       sheetWidth = min(400, mediaQuery.size.width / 2);
-      sheetCover = EdgeInsets.only(left: sheetWidth);
+      if (mediaQuery.size.height > sheetHeight * 2) {
+        sheetCover = EdgeInsets.only(bottom: sheetHeight + headerHeight + sheetPadding.vertical);
+      } else {
+        sheetCover = EdgeInsets.only(left: sheetWidth + sheetPadding.horizontal);
+      }
     } else {
-      sheetPadding = 0;
-      sheetHeight = mediaQuery.size.height / 2 - 120;
+      sheetPadding = EdgeInsets.zero;
+      sheetHeight = mediaQuery.size.height / 2 - headerHeight;
       sheetWidth = mediaQuery.size.width;
-      sheetCover = EdgeInsets.only(bottom: sheetHeight + 120);
+      sheetCover = EdgeInsets.only(bottom: sheetHeight + headerHeight + sheetPadding.vertical);
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: sheetPadding),
+      padding: sheetPadding,
       width: sheetWidth,
       child: SolidBottomSheet(
         onHide: () {
@@ -49,17 +54,18 @@ class MapBottomSheet extends StatelessWidget {
             // Zoom to show the whole path
             appState.moveToShow(
               bounds: pathDrawing.bounds,
-              padding: mediaQuery.viewPadding + EdgeInsets.all(30) + sheetCover,
+              padding: mediaQuery.padding + EdgeInsets.all(30) + sheetCover,
+              // padding: viewPadding + EdgeInsets.all(30) + EdgeInsets.only(bottom: 250 + 140.0 + 2 * MediaQuery.of(context).padding.bottom)
             );
           }
         },
-        headerBar: BottomSheetHeader(),
+        headerBar: BottomSheetHeader(mediaQuery),
         maxHeight: sheetHeight,
         body: SingleChildScrollView(
           child: Container(
             height: sheetHeight,
             color: Theme.of(context).backgroundColor,
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 15) + EdgeInsets.only(bottom: mediaQuery.padding.bottom),
             child: ElevationChart()
           ),
         ),

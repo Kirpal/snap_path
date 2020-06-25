@@ -21,6 +21,12 @@ class _CopyFieldState extends State<CopyField> {
   Timer _copiedTimer;
 
   @override
+  void dispose() {
+    _copiedTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.text != null ? () {

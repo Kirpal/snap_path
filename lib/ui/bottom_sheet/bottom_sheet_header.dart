@@ -7,9 +7,9 @@ import 'package:snap_path/models/path_drawing.dart';
 
 /// The header of the bottom sheet showing distance, elevation gain, and time
 class BottomSheetHeader extends StatelessWidget {
-  final bool showHandle;
+  final MediaQueryData mediaQuery;
 
-  BottomSheetHeader({this.showHandle = true});
+  BottomSheetHeader(this.mediaQuery);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,8 @@ class BottomSheetHeader extends StatelessWidget {
       selector: (context, state) => state.isMetric,
       builder: (context, metric, child) {
         return Container(
-          padding: EdgeInsets.all(8)
-            .add(EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom)),
-          height: 120 + MediaQuery.of(context).viewPadding.bottom,
+          padding: EdgeInsets.all(8) + EdgeInsets.only(bottom: mediaQuery.padding.bottom),
+          height: 120 + mediaQuery.padding.bottom,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))
@@ -27,18 +26,17 @@ class BottomSheetHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              if (showHandle)
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 5,
-                    margin: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).disabledColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 5,
+                  margin: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).disabledColor,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+              ),
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

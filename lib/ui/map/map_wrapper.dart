@@ -34,6 +34,8 @@ class _MapWrapperState extends State<MapWrapper> {
       children: <Widget>[
         LeafletMapView(),
         SafeArea(
+          bottom: false,
+          right: false,
           child: Align(
             alignment: Alignment.topRight,
             child: IconButton(
@@ -47,7 +49,7 @@ class _MapWrapperState extends State<MapWrapper> {
         ),
         Positioned(
           right: 0,
-          bottom: MediaQuery.of(context).size.aspectRatio > 1.5 ? 0 : 120 + MediaQuery.of(context).viewPadding.bottom,
+          bottom: MediaQuery.of(context).size.width > 720 || MediaQuery.of(context).size.aspectRatio > 1.5 ? 0 : 120 + MediaQuery.of(context).padding.bottom,
           child: MapControls()
         )
       ],
