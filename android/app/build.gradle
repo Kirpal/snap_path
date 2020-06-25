@@ -44,7 +44,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.kirpal.snap_path"
+        applicationId "com.kirpal.snappath"
         minSdkVersion 28
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()

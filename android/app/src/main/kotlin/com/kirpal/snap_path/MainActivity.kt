@@ -1,4 +1,4 @@
-package com.kirpal.snap_path
+package com.kirpal.snappath
 
 import io.flutter.embedding.android.FlutterActivity
 
