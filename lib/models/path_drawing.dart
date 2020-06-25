@@ -85,11 +85,34 @@ class PathDrawingState extends ChangeNotifier {
     _totalPath = Path();
     _paths.forEach((p) => _totalPath.addAll(p.coordinates));
     _totalPath.addAll(_openPath.coordinates);
+    
+    if (_totalPath.nrOfCoordinates > 650) {
+      _simplifyPath(600);
+    }
 
     _totalElevation = ElevationData();
     _elevations.forEach((elevationData) {
       _totalElevation.add(elevationData);
     });
+  }
+
+  /// Reduce the number of coordinates to the given count
+  void _simplifyPath(int count) {
+    var distanceBetween = _totalPath.distance / count;
+
+    _totalPath = _totalPath.equalize(distanceBetween, smoothPath: false);
+
+    _paths = _paths.map((p) {
+      if (p.nrOfCoordinates >= 2) {
+        if (p.distance <= distanceBetween) {
+          return Path.from([p.first, p.last]);
+        }
+
+        return p.equalize(distanceBetween, smoothPath: false);
+      }
+
+      return p;
+    }).toList();
   }
 
   /// Undo the last action
