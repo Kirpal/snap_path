@@ -1,10 +1,8 @@
-import 'package:breakpoint/breakpoint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:snap_path/ui/bottom_sheet/bottom_sheet.dart';
-import 'package:snap_path/ui/bottom_sheet/bottom_sheet_window.dart';
 import 'package:snap_path/colors.dart';
 import 'package:snap_path/models/initial_route.dart';
 import 'package:snap_path/ui/map/map_wrapper.dart';
@@ -83,25 +81,13 @@ class MapApp extends StatelessWidget {
 class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BreakpointBuilder(
-      builder: (context, breakpoint) {
-        var big = breakpoint.columns > 8;
-        return Scaffold(
-          backgroundColor: LightAppColors.background,
-          body: Selector<AppState, bool>(
-            selector: (context, state) => state.initialized,
-            builder: (context, initialized, child) => Stack(
-              children: [
-                if (initialized)
-                  MapWrapper(),
-                if (big)
-                  BottomSheetWindow(),
-              ],
-            ),
-          ),
-          bottomSheet: !big ? MapBottomSheet(viewPadding: MediaQuery.of(context).padding) : Container(),
-        );
-      }
+    return Scaffold(
+      backgroundColor: LightAppColors.background,
+      body: Selector<AppState, bool>(
+        selector: (context, state) => state.initialized,
+        builder: (context, initialized, child) => initialized ? MapWrapper() : Container(),
+      ),
+      bottomSheet: MapBottomSheet(mediaQuery: MediaQuery.of(context)),
     );
   }
 }

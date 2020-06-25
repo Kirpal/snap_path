@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:snap_path/colors.dart';
+import 'package:snap_path/models/elevation_data.dart';
 import 'package:snap_path/ui/map/leaflet/draw_handle_plugin.dart';
 import 'package:snap_path/ui/map/leaflet/draw_line_plugin.dart';
 import 'package:snap_path/ui/map/leaflet/distance_marker.dart';
 import 'package:snap_path/models/map_view_state.dart';
 import 'package:snap_path/models/path_drawing.dart';
+import 'package:snap_path/ui/map/leaflet/highlighted_point_marker.dart';
 
 class LeafletMapView extends StatelessWidget {
   const LeafletMapView({
@@ -39,7 +40,7 @@ class LeafletMapView extends StatelessWidget {
           minZoom: 0,
           maxZoom: 22,
           urlTemplate: "https://api.mapbox.com/styles/v1/{username}/{id}/"
-              "tiles/256/{z}/{x}/{y}?access_token={accessToken}",
+              "tiles/512/{z}/{x}/{y}?access_token={accessToken}",
           additionalOptions: {
             'accessToken': context.select<AppState, String>((state) => state.mapKey),
             'username': 'kjdemian',
@@ -68,7 +69,7 @@ class LeafletMapView extends StatelessWidget {
                 ),
               ),
           ],
-              ),
+        ),
         DrawHandleLayerOptions(),
         MarkerLayerOptions(
           markers: [

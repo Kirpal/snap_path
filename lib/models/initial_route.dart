@@ -42,7 +42,7 @@ class InitialRoute {
       pathDrawingState.endPath();
       appState.moveToShow(
         bounds: pathDrawingState.bounds,
-        padding: EdgeInsets.all(24).add(EdgeInsets.only(bottom: 140)),
+        padding: EdgeInsets.all(24).add(EdgeInsets.only(bottom: 120)),
       );
     }
   }

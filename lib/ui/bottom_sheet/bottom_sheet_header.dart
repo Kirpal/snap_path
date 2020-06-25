@@ -17,9 +17,9 @@ class BottomSheetHeader extends StatelessWidget {
       selector: (context, state) => state.isMetric,
       builder: (context, metric, child) {
         return Container(
-          padding: EdgeInsets.all(10)
+          padding: EdgeInsets.all(8)
             .add(EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom)),
-          height: 140 + MediaQuery.of(context).viewPadding.bottom,
+          height: 120 + MediaQuery.of(context).viewPadding.bottom,
           decoration: BoxDecoration(
             color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))
@@ -32,7 +32,7 @@ class BottomSheetHeader extends StatelessWidget {
                   child: Container(
                     width: 40,
                     height: 5,
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Theme.of(context).disabledColor,
                       borderRadius: BorderRadius.circular(10),
@@ -95,14 +95,14 @@ class HeaderFigure extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AutoSizeText(name, maxLines: 1,),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 5),
               child: AutoSizeText(
                 data,
                 maxLines: 1,

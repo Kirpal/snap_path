@@ -21,6 +21,7 @@ class _MapWrapperState extends State<MapWrapper> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (context.read<AppState>().showIntro) {
         await showDialog(context: context, child: IntroDialog());
+        context.read<AppState>().goToUserLocation(ask: true);
         context.read<AppState>().updatePreference('showIntro', false);
       }
     });
@@ -46,7 +47,7 @@ class _MapWrapperState extends State<MapWrapper> {
         ),
         Positioned(
           right: 0,
-          bottom: 140 + MediaQuery.of(context).viewPadding.bottom,
+          bottom: MediaQuery.of(context).size.aspectRatio > 1.5 ? 0 : 120 + MediaQuery.of(context).viewPadding.bottom,
           child: MapControls()
         )
       ],
