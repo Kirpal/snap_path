@@ -5,10 +5,10 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:gpx/gpx.dart';
 import 'package:latlong/latlong.dart';
-import 'package:polyline/polyline.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 import 'package:snap_path/models/map_view_state.dart';
 import 'package:snap_path/models/path_drawing.dart';
+import 'package:snap_path/utils/map_utils.dart';
 
 class InitialRoute {
   /// Initialize the drawn route with any incoming intent (sharing, link, etc)
@@ -52,8 +52,7 @@ class InitialRoute {
     if (data?.link != null
       && data.link.pathSegments.length == 2
       && data.link.pathSegments.first == 'route') {
-      return Polyline.Decode(encodedString: data.link.pathSegments[1]).decodedCoords
-        .map((p) => LatLng(p[0], p[1])).toList();
+      return MapUtils.polylineToCoordinates(data.link.pathSegments[1]);
     }
 
     return [];

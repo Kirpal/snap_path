@@ -5,7 +5,7 @@ import 'package:snap_path/ui/bottom_sheet/elevation_chart_placeholder.dart';
 import 'package:snap_path/models/elevation_data.dart';
 import 'package:snap_path/models/map_view_state.dart';
 import 'package:snap_path/models/path_drawing.dart';
-import 'package:snap_path/utils.dart';
+import 'package:snap_path/utils/utils.dart';
 
 class ElevationChart extends StatelessWidget {
   @override

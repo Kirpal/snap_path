@@ -1,9 +1,10 @@
-import 'package:distance/distance.dart' as d;
+import 'package:distance/distance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong/latlong.dart';
+import 'package:latlong/latlong.dart' show LatLng, Path;
 import 'package:snap_path/models/elevation_data.dart';
 import 'package:snap_path/repositories/map_repository.dart';
+import 'package:snap_path/utils/utils.dart';
 
 class PathDrawingState extends ChangeNotifier {
   List<Path> _paths = [];
@@ -172,11 +173,11 @@ class PathDrawingState extends ChangeNotifier {
   bool get canUndo => _oldPaths.isNotEmpty || _paths.isNotEmpty;
 
   /// The length of the path drawn so far
-  d.Distance get distance => d.Distance(micrometers: (_totalPath.distance * d.Distance.micrometersInMeter).round());
+  Distance get distance => _totalPath.distance.toDistance();
 
   /// The list of coordinates at the discrete distance markers
   List<LatLng> distanceMarkers(bool metric) {
-    var lengthUnit = metric ? d.Distance(kilometers: 1) : d.Distance(miles: 1);
+    var lengthUnit = metric ? Distance(kilometers: 1) : Distance(miles: 1);
     if (_totalPath.distance < lengthUnit.inMeters) {
       return [];
     } else {

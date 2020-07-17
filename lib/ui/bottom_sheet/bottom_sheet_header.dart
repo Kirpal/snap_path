@@ -7,6 +7,7 @@ import 'package:snap_path/models/path_drawing.dart';
 
 /// The header of the bottom sheet showing distance, elevation gain, and time
 class BottomSheetHeader extends StatelessWidget {
+  final headerTextGroup = AutoSizeGroup();
   final MediaQueryData mediaQuery;
 
   BottomSheetHeader(this.mediaQuery);
@@ -45,6 +46,7 @@ class BottomSheetHeader extends StatelessWidget {
                     Selector<PathDrawingState, Distance>(
                       selector: (context, state) => state.distance,
                       builder: (context, distance, child) => HeaderFigure(
+                        group: headerTextGroup,
                         name: 'Distance',
                         data: (metric ? distance.inKilometers : distance.inMiles).toStringAsFixed(2),
                         unit: metric ? 'kilometers' : 'miles',
@@ -54,6 +56,7 @@ class BottomSheetHeader extends StatelessWidget {
                     Selector<PathDrawingState, Distance>(
                       selector: (context, state) => state.elevation.gain,
                       builder: (context, gain, child) => HeaderFigure(
+                        group: headerTextGroup,
                         name: 'Elevation Gain',
                         data: (metric ? gain.inMeters : gain.inFeet).round().toString(),
                         unit: metric ? 'meters' : 'feet',
@@ -65,6 +68,7 @@ class BottomSheetHeader extends StatelessWidget {
                         seconds: (pathDrawing.distance.inMeters / state.metersPerSecond).round()
                       ),
                       builder: (context, duration, child) => HeaderFigure(
+                        group: headerTextGroup,
                         name: 'Time',
                         data: duration.inMinutes.toString(),
                         unit: 'minutes'
@@ -83,11 +87,12 @@ class BottomSheetHeader extends StatelessWidget {
 
 /// The big datapoints displayed in the bottom sheet header
 class HeaderFigure extends StatelessWidget {
+  final AutoSizeGroup group;
   final String name;
   final String data;
   final String unit;
 
-  HeaderFigure({this.name = '', this.data = '', this.unit = ''});
+  HeaderFigure({this.group, this.name, this.data, this.unit});
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +103,14 @@ class HeaderFigure extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            if (name?.isNotEmpty?? false)
             AutoSizeText(name, maxLines: 1,),
+            if (data?.isNotEmpty?? false)
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
               child: AutoSizeText(
                 data,
+                group: group,
                 maxLines: 1,
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
@@ -110,6 +118,7 @@ class HeaderFigure extends StatelessWidget {
                 ),
               ),
             ),
+            if (unit?.isNotEmpty?? false)
             AutoSizeText(unit, maxLines: 1,),
           ],
         ),

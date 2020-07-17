@@ -1,10 +1,10 @@
 import 'package:distance/distance.dart';
 import 'package:equatable/equatable.dart';
-import 'package:latlong/latlong.dart' as ll;
+import 'package:latlong/latlong.dart' show LatLng;
 
 class ElevationPoint extends Equatable {
   /// The map coordinate of this elevation point
-  final ll.LatLng coordinate;
+  final LatLng coordinate;
   /// The elevation of this point
   final Distance elevation;
   /// The total distance so far in the path at this point
@@ -51,7 +51,8 @@ class ElevationData extends Equatable {
           filteredPoints.add(point);
           current = point;
         }
-      }); 
+      });
+      filteredPoints.add(sorted.last); 
 
       return filteredPoints;
     } else {

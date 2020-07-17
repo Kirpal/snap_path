@@ -68,6 +68,16 @@ class LeafletMapView extends StatelessWidget {
                   ),
                 ),
               ),
+            if (context.select<AppState, LatLng>((state) => state.selectedLocation) != null)
+              Marker(
+                width: 40,
+                height: 40,
+                point: context.select<AppState, LatLng>((state) => state.selectedLocation),
+                builder: (ctx) => Transform.translate(
+                  offset: Offset(0, -17),
+                  child: Icon(Icons.location_on, size: 40, color: Colors.deepPurple[700],),
+                ),
+              ),
           ],
         ),
         DrawHandleLayerOptions(),

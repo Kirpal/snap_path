@@ -20,7 +20,7 @@ dependencies:
   auto_size_text: ^2.1.0
   shared_preferences: '>=0.5.7+3 <2.0.0'
   distance: ^0.1.1
-  equatable: ^1.1.1
+  equatable: ^1.2.0
   polyline: ^1.0.2
   breakpoint: ^1.0.1+2
   url_launcher: ^5.4.10
@@ -28,6 +28,7 @@ dependencies:
   wc_flutter_share: ^0.2.2
   firebase_dynamic_links: ^0.5.1
   receive_sharing_intent: ^1.4.0+2
+  flutter_svg: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +41,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/illustrations/
 
 flutter_icons:
   android: true
