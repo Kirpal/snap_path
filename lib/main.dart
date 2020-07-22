@@ -25,15 +25,14 @@ class MapApp extends StatelessWidget {
   );
   final AppState _appState;
   final PathDrawingState _pathDrawingState;
-  
-  MapApp() :
-  _appState = AppState(
-    location: Location(),
-    mapController: MapController(),
-    mapKey: _apiKey,
-  ),
-  _pathDrawingState = PathDrawingState(mapRepository: _mapRepository)
-  {
+
+  MapApp()
+      : _appState = AppState(
+          location: Location(),
+          mapController: MapController(),
+          mapKey: _apiKey,
+        ),
+        _pathDrawingState = PathDrawingState(mapRepository: _mapRepository) {
     InitialRoute.initialize(_pathDrawingState, _appState);
   }
 
@@ -41,44 +40,48 @@ class MapApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<PathDrawingState>.value(value: _pathDrawingState),
+        ChangeNotifierProvider<PathDrawingState>.value(
+            value: _pathDrawingState),
         ChangeNotifierProvider<AppState>.value(value: _appState),
-        ChangeNotifierProvider<SearchPageState>(create: (context) => SearchPageState(mapRepository: _mapRepository),),
-        Provider<MapRepository>.value(value: _mapRepository,),
+        ChangeNotifierProvider<SearchPageState>(
+          create: (context) => SearchPageState(mapRepository: _mapRepository),
+        ),
+        Provider<MapRepository>.value(
+          value: _mapRepository,
+        ),
       ],
       child: Selector<AppState, ThemeMode>(
-        selector: (contex, state) => state.themeMode,
-        builder: (context, themeMode, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Snap Path',
-            themeMode: themeMode,
-            theme: ThemeData(
-              brightness: Brightness.light,
-              primarySwatch: Colors.purple,
-              backgroundColor: LightAppColors.background,
-              primaryColor: LightAppColors.primary,
-              accentColor: LightAppColors.foreground,
-              disabledColor: LightAppColors.foreground2,
-              scaffoldBackgroundColor: LightAppColors.background,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              appBarTheme: AppBarTheme(brightness: Brightness.light),
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              primarySwatch: Colors.purple,
-              backgroundColor: DarkAppColors.background,
-              primaryColor: DarkAppColors.primary,
-              accentColor: DarkAppColors.foreground,
-              disabledColor: DarkAppColors.foreground2,
-              scaffoldBackgroundColor: DarkAppColors.background,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              appBarTheme: AppBarTheme(brightness: Brightness.dark),
-            ),
-            home: MapPage(),
-          );
-        }
-      ),
+          selector: (contex, state) => state.themeMode,
+          builder: (context, themeMode, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Snap Path',
+              themeMode: themeMode,
+              theme: ThemeData(
+                brightness: Brightness.light,
+                primarySwatch: Colors.purple,
+                backgroundColor: LightAppColors.background,
+                primaryColor: LightAppColors.primary,
+                accentColor: LightAppColors.foreground,
+                disabledColor: LightAppColors.foreground2,
+                scaffoldBackgroundColor: LightAppColors.background,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                appBarTheme: AppBarTheme(brightness: Brightness.light),
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                primarySwatch: Colors.purple,
+                backgroundColor: DarkAppColors.background,
+                primaryColor: DarkAppColors.primary,
+                accentColor: DarkAppColors.foreground,
+                disabledColor: DarkAppColors.foreground2,
+                scaffoldBackgroundColor: DarkAppColors.background,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                appBarTheme: AppBarTheme(brightness: Brightness.dark),
+              ),
+              home: MapPage(),
+            );
+          }),
     );
   }
 }
@@ -87,14 +90,17 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(canvasColor: Colors.transparent,),
+      data: Theme.of(context).copyWith(
+        canvasColor: Colors.transparent,
+      ),
       child: Scaffold(
         // The keyboard should never actually launch here, this makes the hero transition smoother though
         resizeToAvoidBottomInset: false,
         backgroundColor: LightAppColors.background,
         body: Selector<AppState, bool>(
           selector: (context, state) => state.initialized,
-          builder: (context, initialized, child) => initialized ? MapWrapper() : Container(),
+          builder: (context, initialized, child) =>
+              initialized ? MapWrapper() : Container(),
         ),
         bottomSheet: MapBottomSheet(mediaQuery: MediaQuery.of(context)),
       ),

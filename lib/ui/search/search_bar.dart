@@ -46,7 +46,8 @@ class SearchBar extends StatelessWidget {
                   opacity: searchBarEmpty ? 1 : 0,
                   child: child,
                 ),
-                child: Text('Search',
+                child: Text(
+                  'Search',
                   style: TextStyle(
                     color: Theme.of(context).hintColor,
                     fontWeight: FontWeight.normal,
@@ -60,34 +61,39 @@ class SearchBar extends StatelessWidget {
               right: 40,
               child: TextField(
                 autofocus: true,
-                controller: context.select<SearchPageState, TextEditingController>((state) => state.controller),
+                controller:
+                    context.select<SearchPageState, TextEditingController>(
+                        (state) => state.controller),
                 focusNode: focusNode,
                 onEditingComplete: () => FocusScope.of(context).unfocus(),
                 onChanged: (value) {
                   var userLocation = context.read<AppState>().userLocation;
-                  context.read<SearchPageState>().searchBarOnChanged(value, userLocation);
+                  context
+                      .read<SearchPageState>()
+                      .searchBarOnChanged(value, userLocation.location);
                 },
                 textCapitalization: TextCapitalization.sentences,
                 textInputAction: TextInputAction.search,
                 decoration: null,
               ),
             ),
-            if (!context.select<SearchPageState, bool>((state) => state.searchBarEmpty))
-            Align(
-              alignment: Alignment.centerRight,
-              child: Material(
-                clipBehavior: Clip.antiAlias,
-                shape: CircleBorder(),
-                color: Theme.of(context).backgroundColor,
-                child: IconButton(
-                  constraints: BoxConstraints(maxHeight: 40, maxWidth: 40),
-                  icon: Icon(FeatherIcons.x),
-                  color: Theme.of(context).accentColor,
-                  iconSize: 20,
-                  onPressed: () => context.read<SearchPageState>().clear(),
+            if (!context
+                .select<SearchPageState, bool>((state) => state.searchBarEmpty))
+              Align(
+                alignment: Alignment.centerRight,
+                child: Material(
+                  clipBehavior: Clip.antiAlias,
+                  shape: CircleBorder(),
+                  color: Theme.of(context).backgroundColor,
+                  child: IconButton(
+                    constraints: BoxConstraints(maxHeight: 40, maxWidth: 40),
+                    icon: Icon(FeatherIcons.x),
+                    color: Theme.of(context).accentColor,
+                    iconSize: 20,
+                    onPressed: () => context.read<SearchPageState>().clear(),
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

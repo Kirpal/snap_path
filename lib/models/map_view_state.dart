@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:distance/distance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -5,15 +7,29 @@ import 'package:latlong/latlong.dart' show LatLng;
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snap_path/models/saved_route.dart';
+import 'package:snap_path/models/search_result.dart';
+
+@immutable
+class UserLocation {
+  final LatLng location;
+  final bool isOld;
+
+  UserLocation._(this.location, this.isOld);
+
+  UserLocation(LatLng location) : this._(location, false);
+
+  UserLocation expire() => UserLocation._(location, true);
+}
 
 class AppState extends ChangeNotifier {
   final Location _location;
   final MapController mapController;
   final String mapKey;
   SharedPreferences _preferences;
-  
-  LatLng userLocation;
-  LatLng selectedLocation;
+  Timer _userLocationTimeout;
+
+  UserLocation userLocation;
+  SearchResult selectedResult;
   List<SavedRouteData> savedRoutes;
   ThemeMode themeMode;
   bool canGetLocation = false;
@@ -24,28 +40,47 @@ class AppState extends ChangeNotifier {
   bool isMetric = false;
   double metersPerSecond = 3.3528;
 
-  AppState({@required Location location, @required this.mapController, @required this.mapKey})
-    : _location = location {
-      Future.wait([
-        _initializePreferences(),
-        _initializeLocation()
-      ]).then((_) => notifyListeners());
+  AppState(
+      {@required Location location,
+      @required this.mapController,
+      @required this.mapKey})
+      : _location = location {
+    Future.wait([_initializePreferences(), _initializeLocation()])
+        .then((_) => notifyListeners());
+  }
+
+  @override
+  void dispose() {
+    _userLocationTimeout?.cancel();
+    super.dispose();
   }
 
   /// Set the [userLocation] based on the given locationData
   void _setLocation(LocationData locationData) {
-    userLocation = LatLng(locationData.latitude, locationData.longitude);
+    userLocation =
+        UserLocation(LatLng(locationData.latitude, locationData.longitude));
+
+    _userLocationTimeout?.cancel();
+    _userLocationTimeout = Timer(Duration(minutes: 5), () {
+      userLocation = userLocation.expire();
+      notifyListeners();
+    });
   }
 
   /// Read the shared preferences and initialize fields
   Future<void> _initializePreferences() async {
     _preferences = await SharedPreferences.getInstance();
 
-    isMetric = _preferences.getBool('isMetric')?? isMetric;
-    metersPerSecond = _preferences.getDouble('metersPerSecond')?? metersPerSecond;
-    showIntro = _preferences.getBool('showIntro')?? showIntro;
-    themeMode = ThemeMode.values[_preferences.getInt('themeMode')?? 0];
-    savedRoutes = _preferences.getStringList('savedRoutes')?.map((d) => SavedRouteData.decode(d))?.toList(growable: false)?? List(0);
+    isMetric = _preferences.getBool('isMetric') ?? isMetric;
+    metersPerSecond =
+        _preferences.getDouble('metersPerSecond') ?? metersPerSecond;
+    showIntro = _preferences.getBool('showIntro') ?? showIntro;
+    themeMode = ThemeMode.values[_preferences.getInt('themeMode') ?? 0];
+    savedRoutes = _preferences
+            .getStringList('savedRoutes')
+            ?.map((d) => SavedRouteData.decode(d))
+            ?.toList(growable: false) ??
+        List(0);
   }
 
   /// Check if the location permission is granted, if so go to the current location, otherwise set
@@ -55,13 +90,8 @@ class AppState extends ChangeNotifier {
       case PermissionStatus.granted:
         canGetLocation = true;
         _setLocation(await _location.getLocation());
-        
-        goToUserLocation(ask: false);
 
-        _location.changeSettings(
-          accuracy: LocationAccuracy.balanced,
-          interval: 5000,
-        );
+        goToUserLocation(ask: false);
 
         _location.onLocationChanged.listen((locationData) {
           _setLocation(locationData);
@@ -88,7 +118,7 @@ class AppState extends ChangeNotifier {
   }
 
   /// Move the map to the current user location
-  /// 
+  ///
   /// If location permission is not granted and [ask] is true, then request permission
   void goToUserLocation({bool ask = true}) {
     if (userLocation == null) {
@@ -96,15 +126,17 @@ class AppState extends ChangeNotifier {
         _location.requestPermission().then((_) => _initializeLocation());
       }
     } else if (userLocation != null && mapController.ready) {
-      mapController.move(userLocation, 14);
+      mapController.move(userLocation.location, 14);
     }
   }
 
-  /// Select the given location and show it with the given bounds
-  void selectLocation(LatLng center, LatLngBounds bounds) {
-    moveToShow(bounds: bounds, padding: EdgeInsets.all(20));
+  /// Select the given search result and move to show it
+  void selectResult(SearchResult selected) {
+    if (selected != null) {
+      moveToShow(bounds: selected.bounds, padding: EdgeInsets.all(20));
+    }
 
-    selectedLocation = center;
+    selectedResult = selected;
     notifyListeners();
   }
 
@@ -132,7 +164,8 @@ class AppState extends ChangeNotifier {
 
   /// Move the map to show the given bounds
   void moveToShow({LatLngBounds bounds, EdgeInsets padding}) {
-    var moveMap = ([Null _]) => mapController.fitBounds(bounds, options: FitBoundsOptions(padding: padding));
+    var moveMap = ([Null _]) => mapController.fitBounds(bounds,
+        options: FitBoundsOptions(padding: padding));
     if (mapController.ready) {
       moveMap();
     } else {
@@ -153,7 +186,7 @@ class AppState extends ChangeNotifier {
     } else if (value is List<String>) {
       _preferences.setStringList(key, value);
     }
-    
+
     // Actions to perform based on certain preferences being set (namely updating state)
     switch (key) {
       case 'isMetric':

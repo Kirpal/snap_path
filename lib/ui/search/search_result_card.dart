@@ -15,14 +15,16 @@ class SearchResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.read<AppState>().selectLocation(result.center, result.bounds);
+        context.read<AppState>().selectResult(result);
         context.read<SearchPageState>().selectResult(result);
         Navigator.of(context).pop();
       },
       child: Container(
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          border: BorderDirectional(bottom: BorderSide(color: Theme.of(context).disabledColor.withOpacity(0.5))),
+          border: BorderDirectional(
+              bottom: BorderSide(
+                  color: Theme.of(context).disabledColor.withOpacity(0.5))),
         ),
         child: Row(
           children: [
@@ -43,13 +45,15 @@ class SearchResultCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(result.title,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      )),
+                  AutoSizeText(
+                    result.subtitle,
                     maxLines: 1,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    )
                   ),
-                  AutoSizeText(result.subtitle, maxLines: 1,),
                 ],
               ),
             ),

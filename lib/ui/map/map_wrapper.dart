@@ -34,58 +34,67 @@ class _MapWrapperState extends State<MapWrapper> {
   @override
   Widget build(BuildContext context) {
     return Selector<AppState, bool>(
-      selector: (context, state) => state.controlsVisible,
-      builder: (context, controlsVisible, _) {
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            LeafletMapView(),
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 150),
-              top: 0,
-              right: controlsVisible ? 0 : -70,
-              child: AnimatedOpacity(
+        selector: (context, state) => state.controlsVisible,
+        builder: (context, controlsVisible, _) {
+          return Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              LeafletMapView(),
+              AnimatedPositioned(
                 duration: Duration(milliseconds: 150),
-                opacity: controlsVisible ? 1 : 0,
-                child: SafeArea(
-                  bottom: false,
-                  left: false,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    child: Column(
-                      children: <Widget>[
-                        Hero(
-                          tag: 'SEARCH_ICON',
-                          child: FloatingMapControlButton(
-                            icon: FeatherIcons.search,
-                            enabled: true,
-                            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (context) => SearchPage())),
+                top: 0,
+                right: controlsVisible ? 0 : -70,
+                child: AnimatedOpacity(
+                  duration: Duration(milliseconds: 150),
+                  opacity: controlsVisible ? 1 : 0,
+                  child: SafeArea(
+                    bottom: false,
+                    left: false,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        children: <Widget>[
+                          Hero(
+                            tag: 'SEARCH_ICON',
+                            child: FloatingMapControlButton(
+                              icon: FeatherIcons.search,
+                              enabled: true,
+                              onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                      builder: (context) => SearchPage())),
+                            ),
                           ),
-                        ),
-                        FloatingMapControlButton(
-                          icon: FeatherIcons.map,
-                          enabled: true,
-                          onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (context) => ShareAndSavePage())),
-                        ),
-                        FloatingMapControlButton(
-                          enabled: context.select<AppState, bool>((s) => s.canGetLocation),
-                          icon: Platform.isIOS ? FeatherIcons.navigation : FeatherIcons.crosshair,
-                          onPressed: () => context.read<AppState>().goToUserLocation(),
-                        ),
-                      ],
+                          FloatingMapControlButton(
+                            icon: FeatherIcons.map,
+                            enabled: true,
+                            onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                    builder: (context) => ShareAndSavePage())),
+                          ),
+                          FloatingMapControlButton(
+                            enabled: context.select<AppState, bool>(
+                                (s) => s.canGetLocation),
+                            icon: Platform.isIOS
+                                ? FeatherIcons.navigation
+                                : FeatherIcons.crosshair,
+                            onPressed: () =>
+                                context.read<AppState>().goToUserLocation(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              bottom: MediaQuery.of(context).size.width > 720 || MediaQuery.of(context).size.aspectRatio > 1.5 ? 0 : 120 + MediaQuery.of(context).padding.bottom,
-              child: MapControls()
-            )
-          ],
-        );
-      }
-    );
+              Positioned(
+                  right: 0,
+                  bottom: MediaQuery.of(context).size.width > 720 ||
+                          MediaQuery.of(context).size.aspectRatio > 1.5
+                      ? 0
+                      : 120 + MediaQuery.of(context).padding.bottom,
+                  child: MapControls())
+            ],
+          );
+        });
   }
 }
