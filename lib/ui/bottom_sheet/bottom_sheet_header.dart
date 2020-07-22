@@ -15,73 +15,76 @@ class BottomSheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Selector<AppState, bool>(
-      selector: (context, state) => state.isMetric,
-      builder: (context, metric, child) {
-        return Container(
-          padding: EdgeInsets.all(8) + EdgeInsets.only(bottom: mediaQuery.padding.bottom),
-          height: 120 + mediaQuery.padding.bottom,
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20))
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 5,
-                  margin: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).disabledColor,
-                    borderRadius: BorderRadius.circular(10),
+        selector: (context, state) => state.isMetric,
+        builder: (context, metric, child) {
+          return Container(
+            padding: EdgeInsets.all(8) +
+                EdgeInsets.only(bottom: mediaQuery.padding.bottom),
+            height: 120 + mediaQuery.padding.bottom,
+            decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    margin: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).disabledColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Selector<PathDrawingState, Distance>(
-                      selector: (context, state) => state.distance,
-                      builder: (context, distance, child) => HeaderFigure(
-                        group: headerTextGroup,
-                        name: 'Distance',
-                        data: (metric ? distance.inKilometers : distance.inMiles).toStringAsFixed(2),
-                        unit: metric ? 'kilometers' : 'miles',
-                      )
-                    ),
-                    HeaderDivider(),
-                    Selector<PathDrawingState, Distance>(
-                      selector: (context, state) => state.elevation.gain,
-                      builder: (context, gain, child) => HeaderFigure(
-                        group: headerTextGroup,
-                        name: 'Elevation Gain',
-                        data: (metric ? gain.inMeters : gain.inFeet).round().toString(),
-                        unit: metric ? 'meters' : 'feet',
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Selector<PathDrawingState, Distance>(
+                          selector: (context, state) => state.distance,
+                          builder: (context, distance, child) => HeaderFigure(
+                                group: headerTextGroup,
+                                name: 'Distance',
+                                data: (metric
+                                        ? distance.inKilometers
+                                        : distance.inMiles)
+                                    .toStringAsFixed(2),
+                                unit: metric ? 'kilometers' : 'miles',
+                              )),
+                      HeaderDivider(),
+                      Selector<PathDrawingState, Distance>(
+                        selector: (context, state) => state.elevation.gain,
+                        builder: (context, gain, child) => HeaderFigure(
+                          group: headerTextGroup,
+                          name: 'Elevation Gain',
+                          data: (metric ? gain.inMeters : gain.inFeet)
+                              .round()
+                              .toString(),
+                          unit: metric ? 'meters' : 'feet',
+                        ),
                       ),
-                    ),
-                    HeaderDivider(),
-                    Selector2<AppState, PathDrawingState, Duration>(
-                      selector: (context, state, pathDrawing) => Duration(
-                        seconds: (pathDrawing.distance.inMeters / state.metersPerSecond).round()
+                      HeaderDivider(),
+                      Selector2<AppState, PathDrawingState, Duration>(
+                        selector: (context, state, pathDrawing) => Duration(
+                            seconds: (pathDrawing.distance.inMeters /
+                                    state.metersPerSecond)
+                                .round()),
+                        builder: (context, duration, child) => HeaderFigure(
+                            group: headerTextGroup,
+                            name: 'Time',
+                            data: duration.inMinutes.toString(),
+                            unit: 'minutes'),
                       ),
-                      builder: (context, duration, child) => HeaderFigure(
-                        group: headerTextGroup,
-                        name: 'Time',
-                        data: duration.inMinutes.toString(),
-                        unit: 'minutes'
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+              ],
+            ),
+          );
+        });
   }
 }
 
@@ -103,23 +106,26 @@ class HeaderFigure extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (name?.isNotEmpty?? false)
-            AutoSizeText(name, maxLines: 1,),
-            if (data?.isNotEmpty?? false)
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: AutoSizeText(
-                data,
-                group: group,
+            if (name?.isNotEmpty ?? false)
+              AutoSizeText(
+                name,
                 maxLines: 1,
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 25
+              ),
+            if (data?.isNotEmpty ?? false)
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 5),
+                child: AutoSizeText(
+                  data,
+                  group: group,
+                  maxLines: 1,
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
                 ),
               ),
-            ),
-            if (unit?.isNotEmpty?? false)
-            AutoSizeText(unit, maxLines: 1,),
+            if (unit?.isNotEmpty ?? false)
+              AutoSizeText(
+                unit,
+                maxLines: 1,
+              ),
           ],
         ),
       ),

@@ -23,7 +23,10 @@ class MapControls extends StatelessWidget {
           color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(100),
           boxShadow: [
-            BoxShadow(blurRadius: 10, offset: Offset(0, 10), color: Colors.black.withOpacity(0.1))
+            BoxShadow(
+                blurRadius: 10,
+                offset: Offset(0, 10),
+                color: Colors.black.withOpacity(0.1))
           ],
         ),
         child: Column(
@@ -35,7 +38,8 @@ class MapControls extends StatelessWidget {
               onPressed: () => context.read<PathDrawingState>().undo(),
             ),
             MapControlButton(
-              enabled: context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
+              enabled:
+                  context.select<PathDrawingState, bool>((s) => s.isNotEmpty),
               icon: FeatherIcons.trash,
               onPressed: () => context.read<PathDrawingState>().clear(),
             ),

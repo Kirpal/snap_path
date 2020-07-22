@@ -38,7 +38,8 @@ class IntroItem extends StatelessWidget {
   final String title;
   final String description;
 
-  IntroItem({@required this.icon, @required this.title, @required this.description});
+  IntroItem(
+      {@required this.icon, @required this.title, @required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +49,13 @@ class IntroItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Spacer(flex: 1,),
+          Spacer(
+            flex: 1,
+          ),
           Flexible(child: icon, flex: 2),
-          Spacer(flex: 1,),
+          Spacer(
+            flex: 1,
+          ),
           Flexible(
             fit: FlexFit.loose,
             flex: 12,
@@ -59,18 +64,21 @@ class IntroItem extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text(title, style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20
-                  ),),
+                  child: Text(
+                    title,
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                  ),
                 ),
-                Text(description, style: TextStyle(
-                  fontSize: 16
-                ),),
+                Text(
+                  description,
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
-          Spacer(flex: 1,),
+          Spacer(
+            flex: 1,
+          ),
         ],
       ),
     );

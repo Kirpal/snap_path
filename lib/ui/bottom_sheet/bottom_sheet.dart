@@ -22,19 +22,24 @@ class MapBottomSheet extends StatelessWidget {
     EdgeInsets sheetCover;
 
     if (mediaQuery.size.width > 720 || mediaQuery.size.aspectRatio > 1.5) {
-      sheetPadding = EdgeInsets.only(top: 14, left: 14) + EdgeInsets.only(left: mediaQuery.padding.left);
-      sheetHeight = min(300, mediaQuery.size.height - sheetPadding.vertical - headerHeight);
+      sheetPadding = EdgeInsets.only(top: 14, left: 14) +
+          EdgeInsets.only(left: mediaQuery.padding.left);
+      sheetHeight = min(
+          300, mediaQuery.size.height - sheetPadding.vertical - headerHeight);
       sheetWidth = min(400, mediaQuery.size.width / 2);
       if (mediaQuery.size.height > sheetHeight * 2) {
-        sheetCover = EdgeInsets.only(bottom: sheetHeight + headerHeight + sheetPadding.vertical);
+        sheetCover = EdgeInsets.only(
+            bottom: sheetHeight + headerHeight + sheetPadding.vertical);
       } else {
-        sheetCover = EdgeInsets.only(left: sheetWidth + sheetPadding.horizontal);
+        sheetCover =
+            EdgeInsets.only(left: sheetWidth + sheetPadding.horizontal);
       }
     } else {
       sheetPadding = EdgeInsets.zero;
       sheetHeight = mediaQuery.size.height / 2 - headerHeight;
       sheetWidth = mediaQuery.size.width;
-      sheetCover = EdgeInsets.only(bottom: sheetHeight + headerHeight + sheetPadding.vertical);
+      sheetCover = EdgeInsets.only(
+          bottom: sheetHeight + headerHeight + sheetPadding.vertical);
     }
 
     return Container(
@@ -48,7 +53,7 @@ class MapBottomSheet extends StatelessWidget {
         onShow: () {
           var appState = context.read<AppState>();
           var pathDrawing = context.read<PathDrawingState>();
-          
+
           appState.toggleControls(false);
           if (pathDrawing.isNotEmpty) {
             // Zoom to show the whole path
@@ -63,11 +68,11 @@ class MapBottomSheet extends StatelessWidget {
         maxHeight: sheetHeight,
         body: SingleChildScrollView(
           child: Container(
-            height: sheetHeight,
-            color: Theme.of(context).backgroundColor,
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 15) + EdgeInsets.only(bottom: mediaQuery.padding.bottom),
-            child: ElevationChart()
-          ),
+              height: sheetHeight,
+              color: Theme.of(context).backgroundColor,
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 15) +
+                  EdgeInsets.only(bottom: mediaQuery.padding.bottom),
+              child: ElevationChart()),
         ),
       ),
     );

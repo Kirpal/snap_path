@@ -7,7 +7,8 @@ class RoundedDialog extends StatelessWidget {
   final List<Widget> items;
   final String action;
 
-  RoundedDialog({@required this.title, @required this.items, @required this.action});
+  RoundedDialog(
+      {@required this.title, @required this.items, @required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +24,14 @@ class RoundedDialog extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text(title, textAlign: TextAlign.center, style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-              ),),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
             ...items,
             Padding(

@@ -15,9 +15,8 @@ class SearchPage extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: CustomScrollView(
-          slivers: [
+          resizeToAvoidBottomInset: true,
+          body: CustomScrollView(slivers: [
             SliverAppBar(
               primary: true,
               pinned: true,
@@ -42,9 +41,7 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
             )
-          ]
-        )
-      ),
+          ])),
     );
   }
 }

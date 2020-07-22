@@ -1,4 +1,3 @@
-
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
@@ -10,5 +9,6 @@ class SearchResult {
   final LatLng center;
   final LatLngBounds bounds;
 
-  SearchResult(this.title, this.subtitle, this.fullText, this.center, this.bounds);
+  SearchResult(
+      this.title, this.subtitle, this.fullText, this.center, this.bounds);
 }

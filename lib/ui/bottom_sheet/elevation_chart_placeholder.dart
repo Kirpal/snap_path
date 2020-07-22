@@ -10,8 +10,10 @@ class ElevationChartPlaceholder extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
-        child: Text('Start drawing to see the elevation!',
-          style: TextStyle(color: Theme.of(context).accentColor.withOpacity(0.5)),
+        child: Text(
+          'Start drawing to see the elevation!',
+          style:
+              TextStyle(color: Theme.of(context).accentColor.withOpacity(0.5)),
         ),
       ),
     );

@@ -32,7 +32,8 @@ class MapControlButton extends StatelessWidget {
             width: size,
             height: size,
             child: Center(
-              child: Icon(icon,
+              child: Icon(
+                icon,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -66,7 +67,10 @@ class FloatingMapControlButton extends StatelessWidget {
         shape: BoxShape.circle,
         color: Theme.of(context).backgroundColor,
         boxShadow: [
-          BoxShadow(blurRadius: 10, offset: Offset(0, 10), color: Colors.black.withOpacity(0.1))
+          BoxShadow(
+              blurRadius: 10,
+              offset: Offset(0, 10),
+              color: Colors.black.withOpacity(0.1))
         ],
       ),
       child: MapControlButton(

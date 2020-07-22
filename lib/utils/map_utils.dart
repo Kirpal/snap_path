@@ -12,7 +12,9 @@ class MapUtils {
 
   /// Convert the given list of coordinates to a polyline string
   static String coordinatesToPolyline(List<LatLng> coordinates) {
-    var polyline = Polyline.Encode(decodedCoords: coordinates.map((l) => [l.latitude, l.longitude]).toList());
+    var polyline = Polyline.Encode(
+        decodedCoords:
+            coordinates.map((l) => [l.latitude, l.longitude]).toList());
 
     return polyline.encodedString;
   }

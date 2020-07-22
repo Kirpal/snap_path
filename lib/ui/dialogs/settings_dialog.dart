@@ -20,8 +20,9 @@ class SettingsDialog extends StatelessWidget {
 
     var pace = Duration(seconds: (metersPerUnit / metersPerSecond).round());
     var minutes = pace.inMinutes;
-    var seconds = NumberFormat('00', 'enUS').format(pace.inSeconds - (minutes * 60));
-    
+    var seconds =
+        NumberFormat('00', 'enUS').format(pace.inSeconds - (minutes * 60));
+
     return '$minutes:$seconds';
   }
 
@@ -36,7 +37,7 @@ class SettingsDialog extends StatelessWidget {
 
     var minutes = int.tryParse(pace.split(':')[0]);
     var seconds = int.tryParse(pace.split(':')[1]);
-    
+
     return metersPerUnit / ((minutes * 60) + seconds);
   }
 
@@ -46,127 +47,157 @@ class SettingsDialog extends StatelessWidget {
       title: 'Settings',
       items: [
         Selector<AppState, ThemeMode>(
-          selector: (context, state) => state.themeMode,
-          builder: (context, themeMode, child) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(FeatherIcons.sun, color: Theme.of(context).primaryColor,),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 20,
-                  child: Row(
-                    children: <Widget>[
-                      Text('Theme:', style: TextStyle(
-                        fontSize: 18,
-                      ),),
-                      Flexible(
-                        child: RadioItem(
-                          onSelected: () => context.read<AppState>().updatePreference('themeMode', ThemeMode.system.index),
-                          text: 'Auto',
-                          selected: themeMode == ThemeMode.system,
-                        ),
-                      ),
-                      Flexible(
-                        child: RadioItem(
-                          onSelected: () => context.read<AppState>().updatePreference('themeMode', ThemeMode.light.index),
-                          text: 'Light',
-                          selected: themeMode == ThemeMode.light,
-                        ),
-                      ),
-                      Flexible(
-                        child: RadioItem(
-                          onSelected: () => context.read<AppState>().updatePreference('themeMode', ThemeMode.dark.index),
-                          text: 'Dark',
-                          selected: themeMode == ThemeMode.dark,
-                        ),
-                      ),
-                    ],
+            selector: (context, state) => state.themeMode,
+            builder: (context, themeMode, child) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    FeatherIcons.sun,
+                    color: Theme.of(context).primaryColor,
                   ),
-                ),
-              ],
-            );
-          }
-        ),
-        Selector<AppState, bool>(
-          selector: (context, state) => state.isMetric,
-          builder: (context, metric, child) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(FeatherIcons.globe, color: Theme.of(context).primaryColor,),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 20,
-                  child: Row(
-                    children: <Widget>[
-                      Text('Distance Units:', style: TextStyle(
-                        fontSize: 18,
-                      ),),
-                      Flexible(
-                        child: RadioItem(
-                          onSelected: () => context.read<AppState>().updatePreference('isMetric', true),
-                          text: 'km',
-                          selected: metric,
-                        ),
-                      ),
-                      Flexible(
-                        child: RadioItem(
-                          onSelected: () => context.read<AppState>().updatePreference('isMetric', false),
-                          text: 'mi',
-                          selected: !metric,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }
-        ),
-        Selector<AppState, bool>(
-          selector: (context, state) => state.isMetric,
-          builder: (context, metric, child) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(FeatherIcons.watch, color: Theme.of(context).primaryColor,),
-                Spacer(flex: 1),
-                Expanded(
-                  flex: 20,
-                  child: Row(
-                    children: <Widget>[
-                      Text('Your pace:', style: TextStyle(
-                        fontSize: 18,
-                      ),),
-                      Container(
-                        width: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          controller: TextEditingController(
-                            text: _formatPace(
-                              context.select<AppState, double>((state) => state.metersPerSecond),
-                              metric)
+                  Spacer(flex: 1),
+                  Expanded(
+                    flex: 20,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Theme:',
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          keyboardType: TextInputType.datetime,
-                          onChanged: (value) {
-                            if (RegExp(r'^[0-9]+:[0-9]{2}$').hasMatch(value)) {
-                              var metersPerSecond = _parsePace(value, metric);
-
-                              context.read<AppState>().updatePreference('metersPerSecond', metersPerSecond);
-                            }
-                          },
-                        )
-                      ),
-                      Text('min / ${metric ? 'km' : 'mi'}')
-                    ],
+                        ),
+                        Flexible(
+                          child: RadioItem(
+                            onSelected: () => context
+                                .read<AppState>()
+                                .updatePreference(
+                                    'themeMode', ThemeMode.system.index),
+                            text: 'Auto',
+                            selected: themeMode == ThemeMode.system,
+                          ),
+                        ),
+                        Flexible(
+                          child: RadioItem(
+                            onSelected: () => context
+                                .read<AppState>()
+                                .updatePreference(
+                                    'themeMode', ThemeMode.light.index),
+                            text: 'Light',
+                            selected: themeMode == ThemeMode.light,
+                          ),
+                        ),
+                        Flexible(
+                          child: RadioItem(
+                            onSelected: () => context
+                                .read<AppState>()
+                                .updatePreference(
+                                    'themeMode', ThemeMode.dark.index),
+                            text: 'Dark',
+                            selected: themeMode == ThemeMode.dark,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
-        ),
+                ],
+              );
+            }),
+        Selector<AppState, bool>(
+            selector: (context, state) => state.isMetric,
+            builder: (context, metric, child) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    FeatherIcons.globe,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Spacer(flex: 1),
+                  Expanded(
+                    flex: 20,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Distance Units:',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Flexible(
+                          child: RadioItem(
+                            onSelected: () => context
+                                .read<AppState>()
+                                .updatePreference('isMetric', true),
+                            text: 'km',
+                            selected: metric,
+                          ),
+                        ),
+                        Flexible(
+                          child: RadioItem(
+                            onSelected: () => context
+                                .read<AppState>()
+                                .updatePreference('isMetric', false),
+                            text: 'mi',
+                            selected: !metric,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
+        Selector<AppState, bool>(
+            selector: (context, state) => state.isMetric,
+            builder: (context, metric, child) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    FeatherIcons.watch,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Spacer(flex: 1),
+                  Expanded(
+                    flex: 20,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          'Your pace:',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Container(
+                            width: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: TextEditingController(
+                                  text: _formatPace(
+                                      context.select<AppState, double>(
+                                          (state) => state.metersPerSecond),
+                                      metric)),
+                              keyboardType: TextInputType.datetime,
+                              onChanged: (value) {
+                                if (RegExp(r'^[0-9]+:[0-9]{2}$')
+                                    .hasMatch(value)) {
+                                  var metersPerSecond =
+                                      _parsePace(value, metric);
+
+                                  context.read<AppState>().updatePreference(
+                                      'metersPerSecond', metersPerSecond);
+                                }
+                              },
+                            )),
+                        Text('min / ${metric ? 'km' : 'mi'}')
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Row(
@@ -179,7 +210,8 @@ class SettingsDialog extends StatelessWidget {
               ),
               FlatButton(
                 child: Text('Licenses'),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                onPressed: () =>
+                    Navigator.of(context).push(MaterialPageRoute<void>(
                   builder: (context) => LicensePage(
                     applicationName: 'Snap Path',
                     applicationLegalese: 'Copyright (c) 2020, Kirpal Demian',

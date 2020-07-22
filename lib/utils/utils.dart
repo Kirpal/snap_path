@@ -4,11 +4,11 @@ import 'package:flutter/material.dart' as material;
 
 /// Create a color for the Charts library from the given material color
 charts.Color chartColorFrom(material.Color materialColor) => charts.Color(
-  r: materialColor.red,
-  g: materialColor.green,
-  b: materialColor.blue,
-  a: materialColor.alpha,
-);
+      r: materialColor.red,
+      g: materialColor.green,
+      b: materialColor.blue,
+      a: materialColor.alpha,
+    );
 
 /// Convenience for creating a [Distance] from meters
 extension ToDistance on num {

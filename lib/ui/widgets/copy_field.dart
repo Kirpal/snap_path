@@ -29,28 +29,30 @@ class _CopyFieldState extends State<CopyField> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.text != null ? () {
-        Clipboard.setData(ClipboardData(text: widget.text));
-        setState(() {
-          _showCopied = true;
-        });
-        _copiedTimer?.cancel();
-        _copiedTimer = Timer(Duration(seconds: 2), () {
-          setState(() {
-            _showCopied = false;
-          });
-        });
-      } : null,
+      onTap: widget.text != null
+          ? () {
+              Clipboard.setData(ClipboardData(text: widget.text));
+              setState(() {
+                _showCopied = true;
+              });
+              _copiedTimer?.cancel();
+              _copiedTimer = Timer(Duration(seconds: 2), () {
+                setState(() {
+                  _showCopied = false;
+                });
+              });
+            }
+          : null,
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Theme.of(context).disabledColor)
-        ),
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Theme.of(context).disabledColor)),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: <Widget>[
-            Text(widget.text?? '',
+            Text(
+              widget.text ?? '',
               maxLines: 1,
               overflow: TextOverflow.fade,
               softWrap: false,
@@ -61,19 +63,20 @@ class _CopyFieldState extends State<CopyField> {
                 duration: Duration(milliseconds: 150),
                 opacity: _showCopied ? 1 : 0,
                 child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 4,
-                        color: Theme.of(context).backgroundColor,
-                        spreadRadius: 8,
-                      )
-                    ]
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4,
+                      color: Theme.of(context).backgroundColor,
+                      spreadRadius: 8,
+                    )
+                  ]),
+                  child: Text(
+                    'Copied!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor.withOpacity(0.8),
+                    ),
                   ),
-                  child: Text('Copied!', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor.withOpacity(0.8),
-                  ),),
                 ),
               ),
             )

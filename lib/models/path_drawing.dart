@@ -16,7 +16,7 @@ class PathDrawingState extends ChangeNotifier {
   Path _totalPath = Path();
   ElevationPoint highlightedPoint;
   final MapRepository _mapRepository;
-  
+
   PathDrawingState({
     @required MapRepository mapRepository,
   }) : _mapRepository = mapRepository;
@@ -25,7 +25,7 @@ class PathDrawingState extends ChangeNotifier {
   void addPoint(LatLng point) {
     _openPath.add(point);
     _totalPath.add(point);
-    
+
     notifyListeners();
   }
 
@@ -39,7 +39,7 @@ class PathDrawingState extends ChangeNotifier {
   }
 
   /// End the current path
-  /// 
+  ///
   /// Saves the current path and snaps it to the nearest road or trail
   Future<void> endPath() async {
     var newPath = _openPath;
@@ -56,9 +56,11 @@ class PathDrawingState extends ChangeNotifier {
 
     _paths.add(newPath);
     _elevations.add(ElevationData());
-    
-    var matchedPath = Path.from(await _mapRepository.matchPath(newPath.coordinates));
-    var newElevation = await _mapRepository.getElevation(_maybeEqualize(matchedPath, 1).coordinates);
+
+    var matchedPath =
+        Path.from(await _mapRepository.matchPath(newPath.coordinates));
+    var newElevation = await _mapRepository
+        .getElevation(_maybeEqualize(matchedPath, 1).coordinates);
 
     int newPathIndex = _paths.indexOf(newPath);
 
@@ -66,11 +68,11 @@ class PathDrawingState extends ChangeNotifier {
       _oldPaths = _paths.sublist(0, 1);
       _paths = _paths.sublist(1);
       newPathIndex = 0;
-      
+
       _oldElevations = _elevations.sublist(0, 1);
       _elevations = _elevations.sublist(1);
     }
-    
+
     if (newPathIndex >= 0 && newPathIndex < _paths.length) {
       _paths[newPathIndex] = matchedPath;
       _elevations[newPathIndex] = newElevation;
@@ -86,7 +88,7 @@ class PathDrawingState extends ChangeNotifier {
     _totalPath = Path();
     _paths.forEach((p) => _totalPath.addAll(p.coordinates));
     _totalPath.addAll(_openPath.coordinates);
-    
+
     if (_totalPath.nrOfCoordinates > 650) {
       _simplifyPath(600);
     }
@@ -125,7 +127,7 @@ class PathDrawingState extends ChangeNotifier {
       _oldElevations = [];
 
       _precomputeElevationPath();
-      
+
       notifyListeners();
     } else if (_paths.isNotEmpty) {
       _paths.removeLast();
@@ -181,7 +183,9 @@ class PathDrawingState extends ChangeNotifier {
     if (_totalPath.distance < lengthUnit.inMeters) {
       return [];
     } else {
-      var equalized = _totalPath.equalize(lengthUnit.inMeters, smoothPath: false).coordinates;
+      var equalized = _totalPath
+          .equalize(lengthUnit.inMeters, smoothPath: false)
+          .coordinates;
 
       equalized.removeAt(0);
       equalized.removeLast();

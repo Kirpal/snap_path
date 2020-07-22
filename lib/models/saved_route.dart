@@ -9,21 +9,23 @@ class SavedRouteData {
   final Distance elevationGain;
 
   SavedRouteData(List<LatLng> coordinates, this.elevationGain)
-  : _path = Path.from(coordinates);
+      : _path = Path.from(coordinates);
 
-  SavedRouteData.decode(String encodedString) : this(
-    MapUtils.polylineToCoordinates(Uri.decodeComponent(encodedString.split('/')[1])),
-    Distance(micrometers: int.parse(encodedString.split('/')[0]))
-  );
+  SavedRouteData.decode(String encodedString)
+      : this(
+            MapUtils.polylineToCoordinates(
+                Uri.decodeComponent(encodedString.split('/')[1])),
+            Distance(micrometers: int.parse(encodedString.split('/')[0])));
 
   Distance get distance => _path.distance.toDistance();
 
   List<LatLng> get coordinates => _path.coordinates;
 
   String get encoded {
-      var encodedPolyline = Uri.encodeComponent(MapUtils.coordinatesToPolyline(coordinates));
-      var micrometers = elevationGain.inMicrometers.round();
+    var encodedPolyline =
+        Uri.encodeComponent(MapUtils.coordinatesToPolyline(coordinates));
+    var micrometers = elevationGain.inMicrometers.round();
 
-      return '$micrometers/$encodedPolyline';
+    return '$micrometers/$encodedPolyline';
   }
 }

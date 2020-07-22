@@ -12,12 +12,11 @@ class SearchPageState extends ChangeNotifier {
   List<SearchResult> searchResults;
   Timer _searchTimer;
 
-  SearchPageState({
-    @required MapRepository mapRepository
-  }) : _mapRepository = mapRepository,
-    controller = TextEditingController(),
-    searchBarEmpty = true,
-    searchResults = [];
+  SearchPageState({@required MapRepository mapRepository})
+      : _mapRepository = mapRepository,
+        controller = TextEditingController(),
+        searchBarEmpty = true,
+        searchResults = [];
 
   /// Clear the search bar and results
   void clear() {
@@ -30,7 +29,8 @@ class SearchPageState extends ChangeNotifier {
 
   /// Called when the search bar value changes
   void searchBarOnChanged(String value, LatLng center) {
-    if ((searchBarEmpty && value.isNotEmpty) || (!searchBarEmpty && value.isEmpty)) {
+    if ((searchBarEmpty && value.isNotEmpty) ||
+        (!searchBarEmpty && value.isEmpty)) {
       searchBarEmpty = value.isEmpty;
 
       notifyListeners();
@@ -38,11 +38,12 @@ class SearchPageState extends ChangeNotifier {
 
     _searchTimer?.cancel();
     if (value.isNotEmpty) {
-      _searchTimer = Timer(Duration(milliseconds: 300), () => _mapRepository.search(value, center)
-      .then((results) {
-        searchResults = results;
-        notifyListeners();
-      }));
+      _searchTimer = Timer(
+          Duration(milliseconds: 300),
+          () => _mapRepository.search(value, center).then((results) {
+                searchResults = results;
+                notifyListeners();
+              }));
     } else {
       searchResults = [];
 

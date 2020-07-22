@@ -20,22 +20,22 @@ class ShareUtils {
           name: 'Snap Path',
           trksegs: [
             Trkseg(
-              trkpts: points.map((l) => Wpt(
-                lat: l.coordinate.latitude,
-                lon: l.coordinate.longitude,
-                ele: l.elevation.inMeters,
-              )).toList()
-            ),
+                trkpts: points
+                    .map((l) => Wpt(
+                          lat: l.coordinate.latitude,
+                          lon: l.coordinate.longitude,
+                          ele: l.elevation.inMeters,
+                        ))
+                    .toList()),
           ],
         ),
       ];
 
     return WcFlutterShare.share(
-      sharePopupTitle: 'Share GPX',
-      fileName: 'snappath.gpx',
-      bytesOfFile: utf8.encode(GpxWriter().asString(gpx, pretty: true)),
-      mimeType: 'application/gpx+xml'
-    );
+        sharePopupTitle: 'Share GPX',
+        fileName: 'snappath.gpx',
+        bytesOfFile: utf8.encode(GpxWriter().asString(gpx, pretty: true)),
+        mimeType: 'application/gpx+xml');
   }
 
   /// Generate a share link for the given path coordinates
@@ -55,11 +55,14 @@ class ShareUtils {
             polyline,
           ],
         ),
-        androidParameters: AndroidParameters(packageName: 'com.kirpal.snappath'),
-        iosParameters: IosParameters(bundleId: 'com.kirpal.snappath', appStoreId: '1520117146'),
+        androidParameters:
+            AndroidParameters(packageName: 'com.kirpal.snappath'),
+        iosParameters: IosParameters(
+            bundleId: 'com.kirpal.snappath', appStoreId: '1520117146'),
       );
 
-      var shortLink = (await linkParameters.buildShortLink()).shortUrl.toString();
+      var shortLink =
+          (await linkParameters.buildShortLink()).shortUrl.toString();
 
       _shareLinkCache[polyline] = shortLink;
 
