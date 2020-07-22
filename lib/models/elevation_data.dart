@@ -5,8 +5,10 @@ import 'package:latlong/latlong.dart' show LatLng;
 class ElevationPoint extends Equatable {
   /// The map coordinate of this elevation point
   final LatLng coordinate;
+
   /// The elevation of this point
   final Distance elevation;
+
   /// The total distance so far in the path at this point
   final Distance distance;
 
@@ -17,12 +19,13 @@ class ElevationPoint extends Equatable {
 
   @override
   String toString() => 'ElevationPoint('
-    'coordinate: $coordinate, distance: $distance, elevation: $elevation)';
+      'coordinate: $coordinate, distance: $distance, elevation: $elevation)';
 }
 
 class ElevationData extends Equatable {
   /// Elevation points as a list of (distance, elevation) in meters
   final List<ElevationPoint> _points;
+
   /// Pre-filtered list of elevation points
   final List<ElevationPoint> _filteredPoints;
 
@@ -35,7 +38,8 @@ class ElevationData extends Equatable {
   ElevationData.from(List<ElevationPoint> points) : this._(points);
 
   /// Filter the given elevations according to the threshold
-  static List<ElevationPoint> _filterPoints(List<ElevationPoint> points, {Distance threshold = const Distance(centimeters: 350)}) {
+  static List<ElevationPoint> _filterPoints(List<ElevationPoint> points,
+      {Distance elevationThreshold = const Distance(meters: 10)}) {
     if (points.isNotEmpty) {
       // Sort the points in ascending distance order
       var sorted = points..sort((a, b) => a.distance.compareTo(b.distance));
@@ -45,14 +49,14 @@ class ElevationData extends Equatable {
 
       filteredPoints.add(sorted.first);
       sorted.skip(1).forEach((point) {
-        if (point.elevation != null
-        && (point.elevation - current.elevation > threshold ||
-            point.elevation - current.elevation < -threshold)) {
+        if (point.elevation != null &&
+            (point.elevation - current.elevation > elevationThreshold ||
+                point.elevation - current.elevation < -elevationThreshold)) {
           filteredPoints.add(point);
           current = point;
         }
       });
-      filteredPoints.add(sorted.last); 
+      filteredPoints.add(sorted.last);
 
       return filteredPoints;
     } else {
@@ -64,8 +68,10 @@ class ElevationData extends Equatable {
   List<Object> get props => _points;
 
   /// The maximum distance in this data
-  Distance get _maxX => hasData ? _points.fold(Distance.zero, (m, p) => m > p.distance ? m : p.distance) : Distance.zero;
-  
+  Distance get _maxX => hasData
+      ? _points.fold(Distance.zero, (m, p) => m > p.distance ? m : p.distance)
+      : Distance.zero;
+
   /// Add the given elevation data to the end of this data
   void add(ElevationData other) {
     Distance totalDistance = _maxX;
@@ -80,10 +86,12 @@ class ElevationData extends Equatable {
       lastDistance = p.distance;
     });
 
-    _filteredPoints..clear()..addAll(_filterPoints(_points));
+    _filteredPoints
+      ..clear()
+      ..addAll(_filterPoints(_points));
   }
 
-  /// The points in this elevation data as (distance, elevation) in meters, with small variations 
+  /// The points in this elevation data as (distance, elevation) in meters, with small variations
   /// filtered out
   List<ElevationPoint> get filtered => _filteredPoints;
 
@@ -95,7 +103,8 @@ class ElevationData extends Equatable {
     Distance totalGain = Distance.zero;
     for (var i = 1; i < _filteredPoints.length; i++) {
       if (_filteredPoints[i].elevation > _filteredPoints[i - 1].elevation) {
-        totalGain += _filteredPoints[i].elevation - _filteredPoints[i - 1].elevation;
+        totalGain +=
+            _filteredPoints[i].elevation - _filteredPoints[i - 1].elevation;
       }
     }
 
