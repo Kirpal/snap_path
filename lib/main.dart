@@ -19,13 +19,6 @@ void main() {
 }
 
 class MapApp extends StatelessWidget {
-  static final _apiKey = const String.fromEnvironment('MAPBOX_KEY');
-  static final _mapRepository = MapboxRepository(
-    apiKey: _apiKey,
-  );
-  final AppState _appState;
-  final PathDrawingState _pathDrawingState;
-
   MapApp()
       : _appState = AppState(
           location: Location(),
@@ -35,6 +28,13 @@ class MapApp extends StatelessWidget {
         _pathDrawingState = PathDrawingState(mapRepository: _mapRepository) {
     InitialRoute.initialize(_pathDrawingState, _appState);
   }
+
+  static const _apiKey = String.fromEnvironment('MAPBOX_KEY');
+  static final _mapRepository = MapboxRepository(
+    apiKey: _apiKey,
+  );
+  final AppState _appState;
+  final PathDrawingState _pathDrawingState;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class MapApp extends StatelessWidget {
                 disabledColor: LightAppColors.foreground2,
                 scaffoldBackgroundColor: LightAppColors.background,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
-                appBarTheme: AppBarTheme(brightness: Brightness.light),
+                appBarTheme: const AppBarTheme(brightness: Brightness.light),
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
@@ -77,7 +77,7 @@ class MapApp extends StatelessWidget {
                 disabledColor: DarkAppColors.foreground2,
                 scaffoldBackgroundColor: DarkAppColors.background,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
-                appBarTheme: AppBarTheme(brightness: Brightness.dark),
+                appBarTheme: const AppBarTheme(brightness: Brightness.dark),
               ),
               home: MapPage(),
             );
@@ -94,7 +94,8 @@ class MapPage extends StatelessWidget {
         canvasColor: Colors.transparent,
       ),
       child: Scaffold(
-        // The keyboard should never actually launch here, this makes the hero transition smoother though
+        // The keyboard should never actually launch here,
+        // this makes the hero transition smoother though
         resizeToAvoidBottomInset: false,
         backgroundColor: LightAppColors.background,
         body: Selector<AppState, bool>(

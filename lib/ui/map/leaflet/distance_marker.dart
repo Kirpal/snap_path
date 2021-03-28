@@ -17,7 +17,7 @@ class DistanceMarker extends Marker {
                 borderRadius: BorderRadius.circular(10)),
             child: Text(
               distance.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 8),

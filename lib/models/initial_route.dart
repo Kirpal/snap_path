@@ -40,11 +40,13 @@ class InitialRoute {
       List<LatLng> path, PathDrawingState pathDrawingState, AppState appState) {
     if (path?.isNotEmpty ?? false) {
       pathDrawingState.clear();
-      path.forEach((p) => pathDrawingState.addPoint(p));
+      for (final p in path) {
+        pathDrawingState.addPoint(p);
+      }
       pathDrawingState.endPath();
       appState.moveToShow(
         bounds: pathDrawingState.bounds,
-        padding: EdgeInsets.all(24) + EdgeInsets.only(bottom: 120),
+        padding: const EdgeInsets.all(24) + const EdgeInsets.only(bottom: 120),
       );
     }
   }
@@ -65,8 +67,8 @@ class InitialRoute {
       List<SharedMediaFile> files) async {
     if (files?.isNotEmpty ?? false) {
       try {
-        var xml = await File(files.first?.path).readAsString();
-        var gpx = GpxReader().fromString(xml);
+        final xml = await File(files.first?.path).readAsString();
+        final gpx = GpxReader().fromString(xml);
         if (gpx.trks.isNotEmpty && gpx.trks.first.trksegs.isNotEmpty) {
           return gpx.trks.first.trksegs.first.trkpts
               .map((w) => LatLng(w.lat, w.lon));

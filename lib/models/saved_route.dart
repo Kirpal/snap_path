@@ -5,9 +5,6 @@ import 'package:snap_path/utils/utils.dart';
 
 /// Holds information about a saved route (elevation, distance, etc.)
 class SavedRouteData {
-  final Path _path;
-  final Distance elevationGain;
-
   SavedRouteData(List<LatLng> coordinates, this.elevationGain)
       : _path = Path.from(coordinates);
 
@@ -17,14 +14,17 @@ class SavedRouteData {
                 Uri.decodeComponent(encodedString.split('/')[1])),
             Distance(micrometers: int.parse(encodedString.split('/')[0])));
 
+  final Path _path;
+  final Distance elevationGain;
+
   Distance get distance => _path.distance.toDistance();
 
   List<LatLng> get coordinates => _path.coordinates;
 
   String get encoded {
-    var encodedPolyline =
+    final encodedPolyline =
         Uri.encodeComponent(MapUtils.coordinatesToPolyline(coordinates));
-    var micrometers = elevationGain.inMicrometers.round();
+    final micrometers = elevationGain.inMicrometers.round();
 
     return '$micrometers/$encodedPolyline';
   }

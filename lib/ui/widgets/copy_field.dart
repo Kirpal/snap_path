@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 
 /// A text field that allows you to click it and copy the text
 class CopyField extends StatefulWidget {
-  final String text;
-
   const CopyField({
     Key key,
     this.text,
   }) : super(key: key);
+
+  final String text;
 
   @override
   _CopyFieldState createState() => _CopyFieldState();
@@ -36,7 +36,7 @@ class _CopyFieldState extends State<CopyField> {
                 _showCopied = true;
               });
               _copiedTimer?.cancel();
-              _copiedTimer = Timer(Duration(seconds: 2), () {
+              _copiedTimer = Timer(const Duration(seconds: 2), () {
                 setState(() {
                   _showCopied = false;
                 });
@@ -44,7 +44,7 @@ class _CopyFieldState extends State<CopyField> {
             }
           : null,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Theme.of(context).disabledColor)),
@@ -60,7 +60,7 @@ class _CopyFieldState extends State<CopyField> {
             Align(
               alignment: Alignment.centerRight,
               child: AnimatedOpacity(
-                duration: Duration(milliseconds: 150),
+                duration: const Duration(milliseconds: 150),
                 opacity: _showCopied ? 1 : 0,
                 child: Container(
                   decoration: BoxDecoration(boxShadow: [

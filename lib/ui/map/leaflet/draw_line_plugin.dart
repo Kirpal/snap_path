@@ -18,7 +18,7 @@ class DrawLineLayer extends StatelessWidget {
             painter: LinePainter(
               strokeWidth: 8,
               points: coordinates.map((point) {
-                var pos = MapState.of(context).project(point) -
+                final pos = MapState.of(context).project(point) -
                     MapState.of(context).getPixelOrigin();
 
                 return Offset(pos.x, pos.y);

@@ -6,9 +6,7 @@ import 'package:latlong/latlong.dart';
 import 'package:snap_path/models/search_result.dart';
 
 class SearchResultMarker extends Marker {
-  final SearchResult searchResult;
-
-  SearchResultMarker(this.searchResult, void Function() onClose)
+  SearchResultMarker(SearchResult searchResult, void Function() onClose)
       : super(
             width: 180,
             height: 122,
@@ -25,7 +23,7 @@ class SearchResultMarker extends Marker {
                     color: Colors.white,
                     child: Container(
                         height: 74,
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,13 +36,15 @@ class SearchResultMarker extends Marker {
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.only(right: 6),
-                                      child: AutoSizeText(searchResult.title,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 18,
-                                              color: Colors.black)),
+                                      child: AutoSizeText(
+                                        searchResult.title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.fade,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 18,
+                                            color: Colors.black),
+                                      ),
                                     ),
                                   ),
                                   Ink(
@@ -55,9 +55,9 @@ class SearchResultMarker extends Marker {
                                       border: Border.all(color: Colors.black12),
                                     ),
                                     child: InkWell(
-                                      customBorder: CircleBorder(),
+                                      customBorder: const CircleBorder(),
                                       onTap: onClose,
-                                      child: Icon(
+                                      child: const Icon(
                                         FeatherIcons.x,
                                         color: Colors.black,
                                         size: 16,
@@ -73,7 +73,7 @@ class SearchResultMarker extends Marker {
                               overflow: TextOverflow.fade,
                               maxFontSize: 12,
                               minFontSize: 5,
-                              style: TextStyle(color: Colors.black54),
+                              style: const TextStyle(color: Colors.black54),
                             ),
                           ],
                         )),

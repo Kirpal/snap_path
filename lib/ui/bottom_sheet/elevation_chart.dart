@@ -45,7 +45,7 @@ class ElevationChart extends StatelessWidget {
                         strokeWidthPx: 2,
                       ),
                       primaryMeasureAxis: AxisSpec(
-                          tickProviderSpec: BasicNumericTickProviderSpec(
+                          tickProviderSpec: const BasicNumericTickProviderSpec(
                               zeroBound: false,
                               desiredMinTickCount: 6,
                               desiredMaxTickCount: 8),
@@ -66,7 +66,7 @@ class ElevationChart extends StatelessWidget {
                               color: chartColorFrom(
                                   Theme.of(context).disabledColor)),
                         ),
-                        tickProviderSpec: BasicNumericTickProviderSpec(
+                        tickProviderSpec: const BasicNumericTickProviderSpec(
                           dataIsInWholeNumbers: false,
                           desiredMinTickCount: 4,
                         ),

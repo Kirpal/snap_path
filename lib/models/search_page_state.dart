@@ -6,17 +6,17 @@ import 'package:snap_path/models/search_result.dart';
 import 'package:snap_path/repositories/map_repository.dart';
 
 class SearchPageState extends ChangeNotifier {
-  final TextEditingController controller;
-  final MapRepository _mapRepository;
-  bool searchBarEmpty;
-  List<SearchResult> searchResults;
-  Timer _searchTimer;
-
   SearchPageState({@required MapRepository mapRepository})
       : _mapRepository = mapRepository,
         controller = TextEditingController(),
         searchBarEmpty = true,
         searchResults = [];
+
+  final TextEditingController controller;
+  final MapRepository _mapRepository;
+  bool searchBarEmpty;
+  List<SearchResult> searchResults;
+  Timer _searchTimer;
 
   /// Clear the search bar and results
   void clear() {
@@ -39,7 +39,7 @@ class SearchPageState extends ChangeNotifier {
     _searchTimer?.cancel();
     if (value.isNotEmpty) {
       _searchTimer = Timer(
-          Duration(milliseconds: 300),
+          const Duration(milliseconds: 300),
           () => _mapRepository.search(value, center).then((results) {
                 searchResults = results;
                 notifyListeners();

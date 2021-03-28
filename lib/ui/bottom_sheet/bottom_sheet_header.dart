@@ -7,10 +7,10 @@ import 'package:snap_path/models/path_drawing.dart';
 
 /// The header of the bottom sheet showing distance, elevation gain, and time
 class BottomSheetHeader extends StatelessWidget {
+  BottomSheetHeader(this.mediaQuery);
+
   final headerTextGroup = AutoSizeGroup();
   final MediaQueryData mediaQuery;
-
-  BottomSheetHeader(this.mediaQuery);
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +18,13 @@ class BottomSheetHeader extends StatelessWidget {
         selector: (context, state) => state.isMetric,
         builder: (context, metric, child) {
           return Container(
-            padding: EdgeInsets.all(8) +
+            padding: const EdgeInsets.all(8) +
                 EdgeInsets.only(bottom: mediaQuery.padding.bottom),
             height: 120 + mediaQuery.padding.bottom,
             decoration: BoxDecoration(
                 color: Theme.of(context).backgroundColor,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(20))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
@@ -31,7 +32,7 @@ class BottomSheetHeader extends StatelessWidget {
                   child: Container(
                     width: 40,
                     height: 5,
-                    margin: EdgeInsets.all(4),
+                    margin: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Theme.of(context).disabledColor,
                       borderRadius: BorderRadius.circular(10),
@@ -90,18 +91,18 @@ class BottomSheetHeader extends StatelessWidget {
 
 /// The big datapoints displayed in the bottom sheet header
 class HeaderFigure extends StatelessWidget {
+  HeaderFigure({this.group, this.name, this.data, this.unit});
+
   final AutoSizeGroup group;
   final String name;
   final String data;
   final String unit;
 
-  HeaderFigure({this.group, this.name, this.data, this.unit});
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.all(6),
+        padding: const EdgeInsets.all(6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,12 +114,13 @@ class HeaderFigure extends StatelessWidget {
               ),
             if (data?.isNotEmpty ?? false)
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.symmetric(vertical: 5),
                 child: AutoSizeText(
                   data,
                   group: group,
                   maxLines: 1,
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 25),
                 ),
               ),
             if (unit?.isNotEmpty ?? false)
@@ -140,7 +142,7 @@ class HeaderDivider extends StatelessWidget {
     return Container(
       width: 1,
       color: Theme.of(context).disabledColor,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
     );
   }
 }

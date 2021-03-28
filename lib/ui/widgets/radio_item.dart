@@ -2,22 +2,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class RadioItem extends StatelessWidget {
+  const RadioItem({
+    @required this.selected,
+    @required this.text,
+    @required this.onSelected,
+  });
+
   final bool selected;
   final String text;
   final Function() onSelected;
-
-  RadioItem(
-      {@required this.selected,
-      @required this.text,
-      @required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onSelected,
       child: Container(
-          padding: EdgeInsets.all(8),
-          margin: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
+          margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: selected
                 ? Theme.of(context).primaryColor.withOpacity(0.3)

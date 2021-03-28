@@ -19,8 +19,8 @@ class LeafletMapView extends StatelessWidget {
   }) : super(key: key);
 
   Map<int, LatLng> _getDistanceMarkers(BuildContext context) {
-    var metric = context.select<AppState, bool>((state) => state.isMetric);
-    var markers = context.select<PathDrawingState, List<LatLng>>(
+    final metric = context.select<AppState, bool>((state) => state.isMetric);
+    final markers = context.select<PathDrawingState, List<LatLng>>(
         (pathDrawing) => pathDrawing.distanceMarkers(metric));
 
     return markers.asMap().map((key, value) => MapEntry(key + 1, value));
@@ -43,7 +43,7 @@ class LeafletMapView extends StatelessWidget {
         onTap: (point) {
           context.read<PathDrawingState>().addPoint(point);
           context.read<PathDrawingState>().endPath();
-          var mapController = context.read<AppState>().mapController;
+          final mapController = context.read<AppState>().mapController;
           mapController.move(point, mapController.zoom);
         },
       ),
@@ -52,8 +52,8 @@ class LeafletMapView extends StatelessWidget {
             options: TileLayerOptions(
           minZoom: 0,
           maxZoom: 22,
-          urlTemplate: "https://api.mapbox.com/styles/v1/{username}/{id}/"
-              "tiles/512/{z}/{x}/{y}?access_token={accessToken}",
+          urlTemplate: 'https://api.mapbox.com/styles/v1/{username}/{id}/'
+              'tiles/512/{z}/{x}/{y}?access_token={accessToken}',
           additionalOptions: {
             'accessToken':
                 context.select<AppState, String>((state) => state.mapKey),

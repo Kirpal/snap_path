@@ -7,7 +7,8 @@ abstract class MapRepository {
   /// Get the elevation data along the given path
   Future<ElevationData> getElevation(List<LatLng> path);
 
-  /// Match the given path to nearby roads and trails, returning the matched path
+  /// Match the given path to nearby roads and trails,
+  /// returning the matched path
   Future<List<LatLng>> matchPath(List<LatLng> path);
 
   /// Search for results by the given query string,

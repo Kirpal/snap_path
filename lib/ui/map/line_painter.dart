@@ -4,9 +4,10 @@ import 'package:snap_path/colors.dart';
 
 /// Paint the drawn path
 class LinePainter extends CustomPainter {
+  LinePainter({this.points = const [], this.strokeWidth = 15});
+
   final List<Offset> points;
   final double strokeWidth;
-  LinePainter({this.points = const [], this.strokeWidth = 15});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -23,15 +24,20 @@ class LinePainter extends CustomPainter {
           ..strokeWidth = strokeWidth);
     if (points.isNotEmpty) {
       // Draw the marker at the beginning of the line
-      canvas.drawCircle(
-          points.first, strokeWidth / 1.5, Paint()..color = Colors.white);
-      canvas.drawCircle(
+      canvas
+        ..drawCircle(
+          points.first,
+          strokeWidth / 1.5,
+          Paint()..color = Colors.white,
+        )
+        ..drawCircle(
           points.first,
           strokeWidth / 1.5,
           Paint()
             ..color = AppColors.primary
             ..style = PaintingStyle.stroke
-            ..strokeWidth = strokeWidth / 3);
+            ..strokeWidth = strokeWidth / 3,
+        );
     }
   }
 

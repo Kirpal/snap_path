@@ -5,60 +5,174 @@ import 'package:snap_path/models/elevation_data.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final points1 = [
-    ElevationPoint(distance: Distance(meters: 0), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 1), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 2), elevation: Distance(meters: 102)),
-    ElevationPoint(distance: Distance(meters: 3), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 4), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 5), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 6), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 7), elevation: Distance(meters: 97)),
+    ElevationPoint(
+      distance: const Distance(meters: 0),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 1),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 2),
+      elevation: const Distance(meters: 102),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 3),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 4),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 5),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 6),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 7),
+      elevation: const Distance(meters: 97),
+    ),
   ];
   final points1Filtered = [
-    ElevationPoint(distance: Distance(meters: 0), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 5), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 6), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 7), elevation: Distance(meters: 97)),
+    ElevationPoint(
+      distance: const Distance(meters: 0),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 5),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 6),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 7),
+      elevation: const Distance(meters: 97),
+    ),
   ];
 
   final points2 = [
-    ElevationPoint(distance: Distance(meters: 0), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 1), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 2), elevation: Distance(meters: 102)),
-    ElevationPoint(distance: Distance(meters: 3), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 4), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 5), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 6), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 7), elevation: Distance(meters: 97)),
-    ElevationPoint(distance: Distance(meters: 7), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 8), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 9), elevation: Distance(meters: 102)),
-    ElevationPoint(distance: Distance(meters: 10), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 11), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 12), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 13), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 14), elevation: Distance(meters: 97)),
+    ElevationPoint(
+      distance: const Distance(meters: 0),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 1),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 2),
+      elevation: const Distance(meters: 102),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 3),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 4),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 5),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 6),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 7),
+      elevation: const Distance(meters: 97),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 7),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 8),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 9),
+      elevation: const Distance(meters: 102),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 10),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 11),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 12),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 13),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 14),
+      elevation: const Distance(meters: 97),
+    ),
   ];
   final points2Filtered = [
-    ElevationPoint(distance: Distance(meters: 0), elevation: Distance(meters: 100)),
-    ElevationPoint(distance: Distance(meters: 5), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 6), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 7), elevation: Distance(meters: 97)),
-    ElevationPoint(distance: Distance(meters: 8), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 12), elevation: Distance(meters: 96)),
-    ElevationPoint(distance: Distance(meters: 13), elevation: Distance(meters: 101)),
-    ElevationPoint(distance: Distance(meters: 14), elevation: Distance(meters: 97)),
+    ElevationPoint(
+      distance: const Distance(meters: 0),
+      elevation: const Distance(meters: 100),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 5),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 6),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 7),
+      elevation: const Distance(meters: 97),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 8),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 12),
+      elevation: const Distance(meters: 96),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 13),
+      elevation: const Distance(meters: 101),
+    ),
+    ElevationPoint(
+      distance: const Distance(meters: 14),
+      elevation: const Distance(meters: 97),
+    ),
   ];
 
   test('hasData', () {
     expect(ElevationData().hasData, false);
     expect(ElevationData.from([]).hasData, false);
     expect(ElevationData.from(points1).hasData, true);
-    expect(ElevationData.from([ElevationPoint(distance: Distance(meters: 1), elevation: Distance(meters: 1))]).hasData, true);
+    expect(
+        ElevationData.from([
+          ElevationPoint(
+              distance: const Distance(meters: 1),
+              elevation: const Distance(meters: 1))
+        ]).hasData,
+        true);
   });
-  
+
   test('add', () {
-    var elevationData1 = ElevationData();
+    final elevationData1 = ElevationData();
     expect(elevationData1, ElevationData());
     elevationData1.add(ElevationData());
     expect(elevationData1, ElevationData());

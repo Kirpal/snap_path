@@ -7,9 +7,9 @@ import 'package:snap_path/models/search_page_state.dart';
 import 'package:snap_path/models/search_result.dart';
 
 class SearchResultCard extends StatelessWidget {
-  final SearchResult result;
-
   SearchResultCard(this.result);
+
+  final SearchResult result;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SearchResultCard extends StatelessWidget {
         Navigator.of(context).pop();
       },
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: BorderDirectional(
               bottom: BorderSide(
@@ -36,8 +36,8 @@ class SearchResultCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: Theme.of(context).disabledColor),
               ),
-              margin: EdgeInsets.only(right: 8),
-              child: Icon(FeatherIcons.mapPin),
+              margin: const EdgeInsets.only(right: 8),
+              child: const Icon(FeatherIcons.mapPin),
             ),
             Expanded(
               child: Column(
@@ -46,7 +46,7 @@ class SearchResultCard extends StatelessWidget {
                 children: [
                   AutoSizeText(result.title,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
                       )),

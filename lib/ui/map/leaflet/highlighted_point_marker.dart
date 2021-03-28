@@ -24,20 +24,22 @@ class HighlightedPointMarker extends Marker {
 
                 if (metric) {
                   elevation = '${highlightedPoint.elevation.inMeters.round()}m';
-                  distance =
-                      '${highlightedPoint.distance.inKilometers.toStringAsFixed(2)}km';
+                  final inKilometers =
+                      highlightedPoint.distance.inKilometers.toStringAsFixed(2);
+                  distance = '${inKilometers}km';
                 } else {
                   elevation = '${highlightedPoint.elevation.inFeet.round()}ft';
-                  distance =
-                      '${highlightedPoint.distance.inMiles.toStringAsFixed(2)}mi';
+                  final inMiles =
+                      highlightedPoint.distance.inMiles.toStringAsFixed(2);
+                  distance = '${inMiles}mi';
                 }
 
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(4),
-                      margin: EdgeInsets.only(bottom: 6),
+                      padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.only(bottom: 6),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
@@ -47,7 +49,7 @@ class HighlightedPointMarker extends Marker {
                         '$distance\n$elevation',
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             height: 1.2),

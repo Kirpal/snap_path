@@ -9,16 +9,16 @@ class DrawHandleLayer extends StatelessWidget {
   final double handleSize = 20;
 
   LatLng _addPointFromOffset(BuildContext context, Offset globalOffset) {
-    MapState mapState = MapState.of(context);
-    RenderBox renderBox = context.findRenderObject();
-    var local = renderBox.globalToLocal(globalOffset);
-    var dx = local.dx / renderBox.constraints.maxWidth;
-    var dy = local.dy / renderBox.constraints.maxHeight;
-    var lat = mapState.bounds.north +
+    final mapState = MapState.of(context);
+    final RenderBox renderBox = context.findRenderObject();
+    final local = renderBox.globalToLocal(globalOffset);
+    final dx = local.dx / renderBox.constraints.maxWidth;
+    final dy = local.dy / renderBox.constraints.maxHeight;
+    final lat = mapState.bounds.north +
         dy * (mapState.bounds.south - mapState.bounds.north);
-    var lng = mapState.bounds.west +
+    final lng = mapState.bounds.west +
         dx * (mapState.bounds.east - mapState.bounds.west);
-    var newPoint = LatLng(lat, lng);
+    final newPoint = LatLng(lat, lng);
 
     context.read<PathDrawingState>().addPoint(newPoint);
 

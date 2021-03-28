@@ -10,12 +10,14 @@ import 'test_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final testApiKey = 'testApiKey';
+  const testApiKey = 'testApiKey';
   final mockClient = MockMapAPIClient();
-  final MapRepository repository = MapboxRepository(client: mockClient, apiKey: testApiKey);
+  final MapRepository repository =
+      MapboxRepository(client: mockClient, apiKey: testApiKey);
   PathData path1;
   PathData path2;
-  final polyline2 = r'}iutGrig`MHmFyDyClAwGaGgQsC{DTm@eFcIqE}OqBeDoCkBqJ{AiMcKuCe@eCf@e@d@';
+  const polyline2 =
+      r'}iutGrig`MHmFyDyClAwGaGgQsC{DTm@eFcIqE}OqBeDoCkBqJ{AiMcKuCe@eCf@e@d@';
   PathDrawingState state;
 
   setUp(() async {
@@ -33,19 +35,20 @@ void main() {
     state.addPoint(path1.path[1]);
     expect(state.coordinates, path1.path.sublist(0, 2));
     expect(state.isNotEmpty, true);
-    expect(state.distance.inMeters, Distance().distance(path1.path[0], path1.path[1]));
+    expect(
+      state.distance.inMeters,
+      const Distance().distance(path1.path[0], path1.path[1]),
+    );
   });
 
-  test('bounds', () {
-
-  });
+  test('bounds', () {});
 
   test('clear()', () {
-    path1.path.forEach((p) => state.addPoint(p));
+    path1.path.forEach(state.addPoint);
     expect(state.isNotEmpty, true);
     state.clear();
     expect(state.isNotEmpty, false);
-    path1.path.forEach((p) => state.addPoint(p));
+    path1.path.forEach(state.addPoint);
     state.endPath();
     expect(state.isNotEmpty, true);
     state.clear();
@@ -53,54 +56,47 @@ void main() {
   });
 
   test('distanceMarkers', () async {
-    var path3 = await readGpx('test/resources/gpx/onthegomap-22.1-km-route.gpx');
-    path3.path.forEach((p) => state.addPoint(p));
+    final path3 =
+        await readGpx('test/resources/gpx/onthegomap-22.1-km-route.gpx');
+    path3.path.forEach(state.addPoint);
     var distanceMarkers = state.distanceMarkers(true);
     expect(distanceMarkers.length, state.distance.inKilometers.floor());
     state.clear();
-    path1.path.forEach((p) => state.addPoint(p));
+    path1.path.forEach(state.addPoint);
     distanceMarkers = state.distanceMarkers(true);
     expect(distanceMarkers.length, state.distance.inKilometers.floor());
   });
 
-  test('elevation', () {
-
-  });
+  test('elevation', () {});
 
   test('endPath()', () async {
-    path2.path.forEach((p) => state.addPoint(p));
+    path2.path.forEach(state.addPoint);
     await state.endPath();
     expect(state.coordinates, MapUtils.polylineToCoordinates(polyline2));
   });
 
   test('multiple concurrent points with undo', () async {
     state.addPoint(path2.path[0]);
-    state.endPath();
-    state.undo();
-    state.addPoint(path2.path[0]);
-    state.endPath();
+    await state.endPath();
+    state
+      ..undo()
+      ..addPoint(path2.path[0]);
+    await state.endPath();
     state.addPoint(path2.path[1]);
     await state.endPath();
-    expectLater(state.coordinates, MapUtils.polylineToCoordinates(polyline2));
+    await expectLater(
+      state.coordinates,
+      MapUtils.polylineToCoordinates(polyline2),
+    );
   });
 
-  test('highlightedPoint', () {
+  test('highlightedPoint', () {});
 
-  });
+  test('highlightPoint', () {});
 
-  test('highlightPoint', () {
+  test('isNotEmpty', () {});
 
-  });
+  test('undo()', () {});
 
-  test('isNotEmpty', () {
-
-  });
-
-  test('undo()', () {
-
-  });
-
-  test('unhighlightPoint()', () {
-
-  });
+  test('unhighlightPoint()', () {});
 }

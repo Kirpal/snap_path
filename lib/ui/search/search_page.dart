@@ -25,7 +25,7 @@ class SearchPage extends StatelessWidget {
               backgroundColor: Theme.of(context).backgroundColor,
               actions: <Widget>[
                 FlatButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () => Navigator.of(context).pop(),
                 )
               ],

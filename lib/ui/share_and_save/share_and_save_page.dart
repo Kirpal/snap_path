@@ -27,7 +27,7 @@ class ShareAndSavePage extends StatelessWidget {
             backgroundColor: Theme.of(context).backgroundColor,
             actions: <Widget>[
               IconButton(
-                icon: Icon(FeatherIcons.settings),
+                icon: const Icon(FeatherIcons.settings),
                 color: Theme.of(context).accentColor.withOpacity(0.4),
                 onPressed: () {
                   showDialog(
@@ -36,7 +36,7 @@ class ShareAndSavePage extends StatelessWidget {
               ),
             ],
             leading: IconButton(
-              icon: Icon(FeatherIcons.arrowLeft),
+              icon: const Icon(FeatherIcons.arrowLeft),
               color: Theme.of(context).accentColor,
               onPressed: () => Navigator.of(context).pop(),
             ),
@@ -59,7 +59,7 @@ class ShareAndSavePage extends StatelessWidget {
                               aspectRatio: 1.2,
                               child: LayoutBuilder(
                                   builder: (context, constraints) {
-                                var width = constraints.maxWidth *
+                                final width = constraints.maxWidth *
                                     MediaQuery.of(context).devicePixelRatio;
                                 return Image.network(context
                                     .watch<MapRepository>()
@@ -89,7 +89,7 @@ class ShareAndSavePage extends StatelessWidget {
                                     visualDensity: VisualDensity.compact,
                                     iconSize: 20,
                                     color: Theme.of(context).primaryColor,
-                                    icon: Icon(
+                                    icon: const Icon(
                                       FeatherIcons.share2,
                                     ),
                                     onPressed: snapshot.hasData
@@ -106,12 +106,12 @@ class ShareAndSavePage extends StatelessWidget {
                             }),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: OutlineButton(
                       color: Theme.of(context).primaryColor,
                       highlightedBorderColor: Theme.of(context).primaryColor,
                       textColor: Theme.of(context).primaryColor,
-                      child: Text('Export GPX'),
+                      child: const Text('Export GPX'),
                       onPressed: () => ShareUtils.shareGpx(context
                           .read<PathDrawingState>()
                           .elevation
@@ -119,14 +119,15 @@ class ShareAndSavePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: FlatButton(
                       color: Theme.of(context).primaryColor,
                       highlightColor: Theme.of(context).primaryColor,
                       textColor: Theme.of(context).backgroundColor,
-                      child: Text('Save Route'),
+                      child: const Text('Save Route'),
                       onPressed: () {
-                        var pathDrawingState = context.read<PathDrawingState>();
+                        final pathDrawingState =
+                            context.read<PathDrawingState>();
 
                         context.read<AppState>().saveRoute(
                             pathDrawingState.coordinates,
@@ -137,7 +138,7 @@ class ShareAndSavePage extends StatelessWidget {
                 ]),
               ),
             ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Text('Saved Routes',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -156,7 +157,7 @@ class ShareAndSavePage extends StatelessWidget {
                           .isNotEmpty
                       ? SliverGrid(
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,

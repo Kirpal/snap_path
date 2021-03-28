@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class MapControlButton extends StatelessWidget {
-  final bool enabled;
-  final IconData icon;
-  final double size;
-  final void Function() onPressed;
-
   MapControlButton({
     Key key,
     this.icon,
@@ -14,20 +9,25 @@ class MapControlButton extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
+  final bool enabled;
+  final IconData icon;
+  final double size;
+  final void Function() onPressed;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       opacity: enabled ? 1 : 0.3,
       child: Material(
         color: Theme.of(context).backgroundColor,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         child: InkResponse(
           containedInkWell: true,
           highlightShape: BoxShape.circle,
           highlightColor: Theme.of(context).primaryColor.withOpacity(0.2),
           splashColor: Theme.of(context).primaryColor.withOpacity(0.2),
-          customBorder: CircleBorder(),
+          customBorder: const CircleBorder(),
           child: SizedBox(
             width: size,
             height: size,
@@ -46,11 +46,6 @@ class MapControlButton extends StatelessWidget {
 }
 
 class FloatingMapControlButton extends StatelessWidget {
-  final bool enabled;
-  final IconData icon;
-  final double size;
-  final void Function() onPressed;
-
   FloatingMapControlButton({
     Key key,
     this.icon,
@@ -59,17 +54,22 @@ class FloatingMapControlButton extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
+  final bool enabled;
+  final IconData icon;
+  final double size;
+  final void Function() onPressed;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Theme.of(context).backgroundColor,
         boxShadow: [
           BoxShadow(
               blurRadius: 10,
-              offset: Offset(0, 10),
+              offset: const Offset(0, 10),
               color: Colors.black.withOpacity(0.1))
         ],
       ),

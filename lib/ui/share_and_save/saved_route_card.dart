@@ -13,12 +13,12 @@ import 'package:wc_flutter_share/wc_flutter_share.dart';
 typedef PopupMenuAction = void Function();
 
 class SavedRouteCard extends StatelessWidget {
+  SavedRouteCard(this.index, this.route, this.metric);
+
   final headerTextGroup = AutoSizeGroup();
   final SavedRouteData route;
   final int index;
   final bool metric;
-
-  SavedRouteCard(this.index, this.route, this.metric);
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,14 @@ class SavedRouteCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
               blurRadius: 10,
-              offset: Offset(0, 10),
+              offset: const Offset(0, 10),
               color: Colors.black.withOpacity(0.02))
         ],
       ),
       child: Stack(
         children: [
           Container(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
@@ -48,10 +48,10 @@ class SavedRouteCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            var width = (constraints.maxWidth *
+                            final width = (constraints.maxWidth *
                                     MediaQuery.of(context).devicePixelRatio)
                                 .round();
-                            var height = (constraints.maxHeight *
+                            final height = (constraints.maxHeight *
                                     MediaQuery.of(context).devicePixelRatio)
                                 .round();
                             return Image.network(context
@@ -94,14 +94,14 @@ class SavedRouteCard extends StatelessWidget {
               splashColor: Theme.of(context).primaryColor.withOpacity(0.05),
               highlightColor: Theme.of(context).primaryColor.withOpacity(0.05),
               onTap: () {
-                var pathDrawingState = context.read<PathDrawingState>();
-                pathDrawingState.clear();
-                route.coordinates.forEach((p) => pathDrawingState.addPoint(p));
+                final pathDrawingState = context.read<PathDrawingState>()
+                  ..clear();
+                route.coordinates.forEach(pathDrawingState.addPoint);
                 pathDrawingState.endPath();
                 context.read<AppState>().moveToShow(
                       bounds: pathDrawingState.bounds,
-                      padding: EdgeInsets.all(24) +
-                          EdgeInsets.only(bottom: 120) +
+                      padding: const EdgeInsets.all(24) +
+                          const EdgeInsets.only(bottom: 120) +
                           MediaQuery.of(context).viewPadding,
                     );
                 Navigator.of(context).pop();
@@ -112,22 +112,23 @@ class SavedRouteCard extends StatelessWidget {
             bottom: 18,
             right: 0,
             child: PopupMenuButton<PopupMenuAction>(
-              icon: Icon(FeatherIcons.moreVertical),
+              icon: const Icon(FeatherIcons.moreVertical),
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: Text('Delete'),
+                  child: const Text('Delete'),
                   value: () => context.read<AppState>().deleteRoute(index),
                 ),
                 PopupMenuItem(
-                    child: Text('Share'),
-                    value: () async {
-                      var shareLink =
-                          await ShareUtils.generateShareLink(route.coordinates);
-                      WcFlutterShare.share(
-                          sharePopupTitle: 'Share Link',
-                          text: shareLink,
-                          mimeType: 'text/plain');
-                    }),
+                  child: const Text('Share'),
+                  value: () async {
+                    final shareLink =
+                        await ShareUtils.generateShareLink(route.coordinates);
+                    await WcFlutterShare.share(
+                        sharePopupTitle: 'Share Link',
+                        text: shareLink,
+                        mimeType: 'text/plain');
+                  },
+                ),
               ],
               onSelected: (action) => action(),
             ),

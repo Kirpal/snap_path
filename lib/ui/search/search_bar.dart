@@ -6,14 +6,14 @@ import 'package:snap_path/models/search_page_state.dart';
 import 'package:snap_path/ui/map/map_control_button.dart';
 
 class SearchBar extends StatelessWidget {
-  final FocusNode focusNode;
-
   SearchBar({this.focusNode});
+
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => focusNode.requestFocus(),
+      onTap: focusNode.requestFocus,
       child: Container(
         height: 40,
         decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class SearchBar extends StatelessWidget {
                 focusNode: focusNode,
                 onEditingComplete: () => FocusScope.of(context).unfocus(),
                 onChanged: (value) {
-                  var userLocation = context.read<AppState>().userLocation;
+                  final userLocation = context.read<AppState>().userLocation;
                   context
                       .read<SearchPageState>()
                       .searchBarOnChanged(value, userLocation.location);
@@ -83,11 +83,12 @@ class SearchBar extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: Material(
                   clipBehavior: Clip.antiAlias,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   color: Theme.of(context).backgroundColor,
                   child: IconButton(
-                    constraints: BoxConstraints(maxHeight: 40, maxWidth: 40),
-                    icon: Icon(FeatherIcons.x),
+                    constraints:
+                        const BoxConstraints(maxHeight: 40, maxWidth: 40),
+                    icon: const Icon(FeatherIcons.x),
                     color: Theme.of(context).accentColor,
                     iconSize: 20,
                     onPressed: () => context.read<SearchPageState>().clear(),

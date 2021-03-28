@@ -8,8 +8,8 @@ import 'package:snap_path/ui/map/map_control_button.dart';
 import 'package:snap_path/ui/map/map_controls.dart';
 import 'package:snap_path/models/map_view_state.dart';
 import 'package:snap_path/ui/dialogs/intro_dialog.dart';
-import 'package:snap_path/ui/search/search_page.dart';
 import 'package:snap_path/ui/share_and_save/share_and_save_page.dart';
+import 'package:snap_path/ui/search/search_page.dart';
 
 class MapWrapper extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _MapWrapperState extends State<MapWrapper> {
     // Show the intro dialog the first time someone opens the app
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (context.read<AppState>().showIntro) {
-        await showDialog(context: context, child: IntroDialog());
+        await showDialog(context: context, builder: (_) => IntroDialog());
         context.read<AppState>().goToUserLocation(ask: true);
         context.read<AppState>().updatePreference('showIntro', false);
       }
@@ -41,17 +41,17 @@ class _MapWrapperState extends State<MapWrapper> {
             children: <Widget>[
               LeafletMapView(),
               AnimatedPositioned(
-                duration: Duration(milliseconds: 150),
+                duration: const Duration(milliseconds: 150),
                 top: 0,
                 right: controlsVisible ? 0 : -70,
                 child: AnimatedOpacity(
-                  duration: Duration(milliseconds: 150),
+                  duration: const Duration(milliseconds: 150),
                   opacity: controlsVisible ? 1 : 0,
                   child: SafeArea(
                     bottom: false,
                     left: false,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Column(
                         children: <Widget>[
                           Hero(

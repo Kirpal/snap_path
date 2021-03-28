@@ -7,6 +7,10 @@ import 'package:snap_path/repositories/map_repository.dart';
 import 'package:snap_path/utils/utils.dart';
 
 class PathDrawingState extends ChangeNotifier {
+  PathDrawingState({
+    @required MapRepository mapRepository,
+  }) : _mapRepository = mapRepository;
+
   List<Path> _paths = [];
   List<Path> _oldPaths = [];
   List<ElevationData> _elevations = [];
@@ -16,10 +20,6 @@ class PathDrawingState extends ChangeNotifier {
   Path _totalPath = Path();
   ElevationPoint highlightedPoint;
   final MapRepository _mapRepository;
-
-  PathDrawingState({
-    @required MapRepository mapRepository,
-  }) : _mapRepository = mapRepository;
 
   /// Add a new point to the path
   void addPoint(LatLng point) {
@@ -57,12 +57,12 @@ class PathDrawingState extends ChangeNotifier {
     _paths.add(newPath);
     _elevations.add(ElevationData());
 
-    var matchedPath =
+    final matchedPath =
         Path.from(await _mapRepository.matchPath(newPath.coordinates));
-    var newElevation = await _mapRepository
+    final newElevation = await _mapRepository
         .getElevation(_maybeEqualize(matchedPath, 1).coordinates);
 
-    int newPathIndex = _paths.indexOf(newPath);
+    var newPathIndex = _paths.indexOf(newPath);
 
     if (newPathIndex == 1 && _paths.first.nrOfCoordinates == 1) {
       _oldPaths = _paths.sublist(0, 1);
@@ -86,7 +86,9 @@ class PathDrawingState extends ChangeNotifier {
   /// Precompute the overall elevation based on the list of elevations
   void _precomputeElevationPath() {
     _totalPath = Path();
-    _paths.forEach((p) => _totalPath.addAll(p.coordinates));
+    for (final p in _paths) {
+      _totalPath.addAll(p.coordinates);
+    }
     _totalPath.addAll(_openPath.coordinates);
 
     if (_totalPath.nrOfCoordinates > 650) {
@@ -94,14 +96,14 @@ class PathDrawingState extends ChangeNotifier {
     }
 
     _totalElevation = ElevationData();
-    _elevations.forEach((elevationData) {
+    for (final elevationData in _elevations) {
       _totalElevation.add(elevationData);
-    });
+    }
   }
 
   /// Reduce the number of coordinates to the given count
   void _simplifyPath(int count) {
-    var distanceBetween = _totalPath.distance / count;
+    final distanceBetween = _totalPath.distance / count;
 
     _totalPath = _totalPath.equalize(distanceBetween, smoothPath: false);
 
@@ -179,16 +181,16 @@ class PathDrawingState extends ChangeNotifier {
 
   /// The list of coordinates at the discrete distance markers
   List<LatLng> distanceMarkers(bool metric) {
-    var lengthUnit = metric ? Distance(kilometers: 1) : Distance(miles: 1);
+    final lengthUnit =
+        metric ? const Distance(kilometers: 1) : const Distance(miles: 1);
     if (_totalPath.distance < lengthUnit.inMeters) {
       return [];
     } else {
-      var equalized = _totalPath
+      final equalized = _totalPath
           .equalize(lengthUnit.inMeters, smoothPath: false)
-          .coordinates;
-
-      equalized.removeAt(0);
-      equalized.removeLast();
+          .coordinates
+        ..removeAt(0)
+        ..removeLast();
 
       return equalized;
     }

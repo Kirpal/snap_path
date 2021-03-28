@@ -9,20 +9,20 @@ import 'package:snap_path/models/path_drawing.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 
 class MapBottomSheet extends StatelessWidget {
-  final MediaQueryData mediaQuery;
-
   MapBottomSheet({@required this.mediaQuery});
+
+  final MediaQueryData mediaQuery;
 
   @override
   Widget build(BuildContext context) {
-    double headerHeight = 120 + mediaQuery.padding.bottom;
+    final headerHeight = 120 + mediaQuery.padding.bottom;
     double sheetHeight;
     double sheetWidth;
     EdgeInsets sheetPadding;
     EdgeInsets sheetCover;
 
     if (mediaQuery.size.width > 720 || mediaQuery.size.aspectRatio > 1.5) {
-      sheetPadding = EdgeInsets.only(top: 14, left: 14) +
+      sheetPadding = const EdgeInsets.only(top: 14, left: 14) +
           EdgeInsets.only(left: mediaQuery.padding.left);
       sheetHeight = min(
           300, mediaQuery.size.height - sheetPadding.vertical - headerHeight);
@@ -51,16 +51,19 @@ class MapBottomSheet extends StatelessWidget {
           context.read<PathDrawingState>().unhighlightPoint();
         },
         onShow: () {
-          var appState = context.read<AppState>();
-          var pathDrawing = context.read<PathDrawingState>();
+          final appState = context.read<AppState>();
+          final pathDrawing = context.read<PathDrawingState>();
 
           appState.toggleControls(false);
           if (pathDrawing.isNotEmpty) {
             // Zoom to show the whole path
             appState.moveToShow(
               bounds: pathDrawing.bounds,
-              padding: mediaQuery.padding + EdgeInsets.all(30) + sheetCover,
-              // padding: viewPadding + EdgeInsets.all(30) + EdgeInsets.only(bottom: 250 + 140.0 + 2 * MediaQuery.of(context).padding.bottom)
+              padding:
+                  mediaQuery.padding + const EdgeInsets.all(30) + sheetCover,
+              // padding: viewPadding + EdgeInsets.all(30) +
+              // EdgeInsets.only(bottom: 250 + 140.0 +
+              // 2 * MediaQuery.of(context).padding.bottom)
             );
           }
         },
@@ -70,7 +73,7 @@ class MapBottomSheet extends StatelessWidget {
           child: Container(
               height: sheetHeight,
               color: Theme.of(context).backgroundColor,
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 15) +
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 15) +
                   EdgeInsets.only(bottom: mediaQuery.padding.bottom),
               child: ElevationChart()),
         ),

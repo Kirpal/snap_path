@@ -13,19 +13,19 @@ class MapControls extends StatelessWidget {
     return Selector<AppState, bool>(
       selector: (context, state) => state.controlsVisible,
       builder: (context, visible, child) => AnimatedOpacity(
-        duration: Duration(milliseconds: 50),
+        duration: const Duration(milliseconds: 50),
         opacity: visible ? 1 : 0,
         child: child,
       ),
       child: Container(
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(100),
           boxShadow: [
             BoxShadow(
                 blurRadius: 10,
-                offset: Offset(0, 10),
+                offset: const Offset(0, 10),
                 color: Colors.black.withOpacity(0.1))
           ],
         ),

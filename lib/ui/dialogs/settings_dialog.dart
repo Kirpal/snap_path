@@ -13,14 +13,14 @@ class SettingsDialog extends StatelessWidget {
   static String _formatPace(double metersPerSecond, bool metric) {
     double metersPerUnit;
     if (metric) {
-      metersPerUnit = Distance(kilometers: 1).inMeters;
+      metersPerUnit = const Distance(kilometers: 1).inMeters;
     } else {
-      metersPerUnit = Distance(miles: 1).inMeters;
+      metersPerUnit = const Distance(miles: 1).inMeters;
     }
 
-    var pace = Duration(seconds: (metersPerUnit / metersPerSecond).round());
-    var minutes = pace.inMinutes;
-    var seconds =
+    final pace = Duration(seconds: (metersPerUnit / metersPerSecond).round());
+    final minutes = pace.inMinutes;
+    final seconds =
         NumberFormat('00', 'enUS').format(pace.inSeconds - (minutes * 60));
 
     return '$minutes:$seconds';
@@ -30,13 +30,13 @@ class SettingsDialog extends StatelessWidget {
   static double _parsePace(String pace, bool metric) {
     double metersPerUnit;
     if (metric) {
-      metersPerUnit = Distance(kilometers: 1).inMeters;
+      metersPerUnit = const Distance(kilometers: 1).inMeters;
     } else {
-      metersPerUnit = Distance(miles: 1).inMeters;
+      metersPerUnit = const Distance(miles: 1).inMeters;
     }
 
-    var minutes = int.tryParse(pace.split(':')[0]);
-    var seconds = int.tryParse(pace.split(':')[1]);
+    final minutes = int.tryParse(pace.split(':')[0]);
+    final seconds = int.tryParse(pace.split(':')[1]);
 
     return metersPerUnit / ((minutes * 60) + seconds);
   }
@@ -56,12 +56,12 @@ class SettingsDialog extends StatelessWidget {
                     FeatherIcons.sun,
                     color: Theme.of(context).primaryColor,
                   ),
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Expanded(
                     flex: 20,
                     child: Row(
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Theme:',
                           style: TextStyle(
                             fontSize: 18,
@@ -113,12 +113,12 @@ class SettingsDialog extends StatelessWidget {
                     FeatherIcons.globe,
                     color: Theme.of(context).primaryColor,
                   ),
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Expanded(
                     flex: 20,
                     child: Row(
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Distance Units:',
                           style: TextStyle(
                             fontSize: 18,
@@ -158,12 +158,12 @@ class SettingsDialog extends StatelessWidget {
                     FeatherIcons.watch,
                     color: Theme.of(context).primaryColor,
                   ),
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Expanded(
                     flex: 20,
                     child: Row(
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Your pace:',
                           style: TextStyle(
                             fontSize: 18,
@@ -171,7 +171,7 @@ class SettingsDialog extends StatelessWidget {
                         ),
                         Container(
                             width: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: TextEditingController(
@@ -183,7 +183,7 @@ class SettingsDialog extends StatelessWidget {
                               onChanged: (value) {
                                 if (RegExp(r'^[0-9]+:[0-9]{2}$')
                                     .hasMatch(value)) {
-                                  var metersPerSecond =
+                                  final metersPerSecond =
                                       _parsePace(value, metric);
 
                                   context.read<AppState>().updatePreference(
@@ -199,20 +199,20 @@ class SettingsDialog extends StatelessWidget {
               );
             }),
         Padding(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               FlatButton(
-                child: Text('Feedback'),
+                child: const Text('Feedback'),
                 onPressed: () => launch('mailto:demian@kirp.al'),
               ),
               FlatButton(
-                child: Text('Licenses'),
+                child: const Text('Licenses'),
                 onPressed: () =>
                     Navigator.of(context).push(MaterialPageRoute<void>(
-                  builder: (context) => LicensePage(
+                  builder: (context) => const LicensePage(
                     applicationName: 'Snap Path',
                     applicationLegalese: 'Copyright (c) 2020, Kirpal Demian',
                   ),

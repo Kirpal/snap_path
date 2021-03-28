@@ -13,7 +13,7 @@ class ShareUtils {
 
   /// Launch a share dialog for a GPX file with the given path coordinates
   static Future<void> shareGpx(List<ElevationPoint> points) async {
-    var gpx = Gpx()
+    final gpx = Gpx()
       ..creator = 'Snap Path'
       ..trks = [
         Trk(
@@ -40,12 +40,12 @@ class ShareUtils {
 
   /// Generate a share link for the given path coordinates
   static Future<String> generateShareLink(List<LatLng> coordinates) async {
-    var polyline = MapUtils.coordinatesToPolyline(coordinates);
+    final polyline = MapUtils.coordinatesToPolyline(coordinates);
 
     if (_shareLinkCache.containsKey(polyline)) {
       return _shareLinkCache[polyline];
     } else {
-      var linkParameters = DynamicLinkParameters(
+      final linkParameters = DynamicLinkParameters(
         uriPrefix: 'https://snappath.page.link',
         link: Uri(
           scheme: 'https',
@@ -61,7 +61,7 @@ class ShareUtils {
             bundleId: 'com.kirpal.snappath', appStoreId: '1520117146'),
       );
 
-      var shortLink =
+      final shortLink =
           (await linkParameters.buildShortLink()).shortUrl.toString();
 
       _shareLinkCache[polyline] = shortLink;

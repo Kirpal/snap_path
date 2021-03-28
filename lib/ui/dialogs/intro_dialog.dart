@@ -34,26 +34,29 @@ class IntroDialog extends StatelessWidget {
 }
 
 class IntroItem extends StatelessWidget {
+  IntroItem({
+    @required this.icon,
+    @required this.title,
+    @required this.description,
+  });
+
   final Widget icon;
   final String title;
   final String description;
 
-  IntroItem(
-      {@required this.icon, @required this.title, @required this.description});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
           Flexible(child: icon, flex: 2),
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
           Flexible(
@@ -63,20 +66,21 @@ class IntroItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     title,
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 20),
                   ),
                 ),
                 Text(
                   description,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
           ),
-          Spacer(
+          const Spacer(
             flex: 1,
           ),
         ],

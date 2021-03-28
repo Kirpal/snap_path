@@ -11,17 +11,26 @@ import 'package:snap_path/models/search_result.dart';
 
 @immutable
 class UserLocation {
-  final LatLng location;
-  final bool isOld;
-
   UserLocation._(this.location, this.isOld);
 
   UserLocation(LatLng location) : this._(location, false);
+
+  final LatLng location;
+  final bool isOld;
 
   UserLocation expire() => UserLocation._(location, true);
 }
 
 class AppState extends ChangeNotifier {
+  AppState(
+      {@required Location location,
+      @required this.mapController,
+      @required this.mapKey})
+      : _location = location {
+    Future.wait([_initializePreferences(), _initializeLocation()])
+        .then((_) => notifyListeners());
+  }
+
   final Location _location;
   final MapController mapController;
   final String mapKey;
@@ -40,15 +49,6 @@ class AppState extends ChangeNotifier {
   bool isMetric = false;
   double metersPerSecond = 3.3528;
 
-  AppState(
-      {@required Location location,
-      @required this.mapController,
-      @required this.mapKey})
-      : _location = location {
-    Future.wait([_initializePreferences(), _initializeLocation()])
-        .then((_) => notifyListeners());
-  }
-
   @override
   void dispose() {
     _userLocationTimeout?.cancel();
@@ -61,7 +61,7 @@ class AppState extends ChangeNotifier {
         UserLocation(LatLng(locationData.latitude, locationData.longitude));
 
     _userLocationTimeout?.cancel();
-    _userLocationTimeout = Timer(Duration(minutes: 5), () {
+    _userLocationTimeout = Timer(const Duration(minutes: 5), () {
       userLocation = userLocation.expire();
       notifyListeners();
     });
@@ -80,10 +80,11 @@ class AppState extends ChangeNotifier {
             .getStringList('savedRoutes')
             ?.map((d) => SavedRouteData.decode(d))
             ?.toList(growable: false) ??
-        List(0);
+        [];
   }
 
-  /// Check if the location permission is granted, if so go to the current location, otherwise set
+  /// Check if the location permission is granted,
+  /// if so go to the current location, otherwise set
   /// [initialized] to true
   Future<void> _initializeLocation() async {
     switch (await _location.hasPermission()) {
@@ -119,7 +120,8 @@ class AppState extends ChangeNotifier {
 
   /// Move the map to the current user location
   ///
-  /// If location permission is not granted and [ask] is true, then request permission
+  /// If location permission is not granted
+  /// and [ask] is true, then request permission
   void goToUserLocation({bool ask = true}) {
     if (userLocation == null) {
       if (ask) {
@@ -133,7 +135,7 @@ class AppState extends ChangeNotifier {
   /// Select the given search result and move to show it
   void selectResult(SearchResult selected) {
     if (selected != null) {
-      moveToShow(bounds: selected.bounds, padding: EdgeInsets.all(20));
+      moveToShow(bounds: selected.bounds, padding: const EdgeInsets.all(20));
     }
 
     selectedResult = selected;
@@ -164,7 +166,7 @@ class AppState extends ChangeNotifier {
 
   /// Move the map to show the given bounds
   void moveToShow({LatLngBounds bounds, EdgeInsets padding}) {
-    var moveMap = ([Null _]) => mapController.fitBounds(bounds,
+    final moveMap = ([Null _]) => mapController.fitBounds(bounds,
         options: FitBoundsOptions(padding: padding));
     if (mapController.ready) {
       moveMap();
@@ -187,7 +189,8 @@ class AppState extends ChangeNotifier {
       _preferences.setStringList(key, value);
     }
 
-    // Actions to perform based on certain preferences being set (namely updating state)
+    // Actions to perform based on certain preferences
+    // being set (namely updating state)
     switch (key) {
       case 'isMetric':
         isMetric = value as bool;
