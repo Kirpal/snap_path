@@ -1,0 +1,21 @@
+name: location_client
+description: A client that deals with user location
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  route:
+    path: ../route
+  async: ^2.5.0
+  location: ^4.1.1
+  rxdart: ^0.27.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^1.0.4

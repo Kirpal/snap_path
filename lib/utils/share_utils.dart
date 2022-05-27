@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:gpx/gpx.dart';
-import 'package:latlong/latlong.dart';
-import 'package:snap_path/models/elevation_data.dart';
-import 'package:snap_path/utils/map_utils.dart';
+import 'package:route/route.dart';
 import 'package:wc_flutter_share/wc_flutter_share.dart';
 
 /// Utilities for sharing
@@ -12,7 +10,7 @@ class ShareUtils {
   static final Map<String, String> _shareLinkCache = {};
 
   /// Launch a share dialog for a GPX file with the given path coordinates
-  static Future<void> shareGpx(List<ElevationPoint> points) async {
+  static Future<void> shareGpx(List<RoutePoint> points) async {
     final gpx = Gpx()
       ..creator = 'Snap Path'
       ..trks = [
@@ -22,8 +20,8 @@ class ShareUtils {
             Trkseg(
                 trkpts: points
                     .map((l) => Wpt(
-                          lat: l.coordinate.latitude,
-                          lon: l.coordinate.longitude,
+                          lat: l.latitude,
+                          lon: l.longitude,
                           ele: l.elevation.inMeters,
                         ))
                     .toList()),
@@ -39,11 +37,9 @@ class ShareUtils {
   }
 
   /// Generate a share link for the given path coordinates
-  static Future<String> generateShareLink(List<LatLng> coordinates) async {
-    final polyline = MapUtils.coordinatesToPolyline(coordinates);
-
-    if (_shareLinkCache.containsKey(polyline)) {
-      return _shareLinkCache[polyline];
+  static Future<String> generateShareLink(Route route) async {
+    if (_shareLinkCache.containsKey(route.polyline)) {
+      return _shareLinkCache[route.polyline]!;
     } else {
       final linkParameters = DynamicLinkParameters(
         uriPrefix: 'https://snappath.page.link',
@@ -52,7 +48,7 @@ class ShareUtils {
           host: 'snappath.kirp.al',
           pathSegments: [
             'route',
-            polyline,
+            route.polyline,
           ],
         ),
         androidParameters:
@@ -64,7 +60,7 @@ class ShareUtils {
       final shortLink =
           (await linkParameters.buildShortLink()).shortUrl.toString();
 
-      _shareLinkCache[polyline] = shortLink;
+      _shareLinkCache[route.polyline] = shortLink;
 
       return shortLink;
     }

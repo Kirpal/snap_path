@@ -1,0 +1,17 @@
+name: initial_route_client
+description: A client to create an initial route on app launch and handle
+  certain app launch intents
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  route:
+    path: ../route
+  rxdart: ^0.27.0
+
+dev_dependencies:
+  test: ^1.15.6
+  very_good_analysis: ^1.0.4

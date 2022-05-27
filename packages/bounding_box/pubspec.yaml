@@ -1,0 +1,15 @@
+name: bounding_box
+description: A geographic bounding box describing an area
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  route:
+    path: ../route
+
+dev_dependencies:
+  test: ^1.15.6
+  very_good_analysis: ^2.1.1

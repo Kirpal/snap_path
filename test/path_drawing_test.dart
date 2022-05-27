@@ -5,20 +5,16 @@ import 'package:snap_path/repositories/map_repository.dart';
 import 'package:snap_path/repositories/mapbox_repository.dart';
 import 'package:snap_path/utils/map_utils.dart';
 
-import 'map_repository_test.dart';
 import 'test_utils.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  const testApiKey = 'testApiKey';
-  final mockClient = MockMapAPIClient();
-  final MapRepository repository =
-      MapboxRepository(client: mockClient, apiKey: testApiKey);
-  PathData path1;
-  PathData path2;
+  final MapRepository repository = MapboxRepository();
+  late PathData path1;
+  late PathData path2;
   const polyline2 =
       r'}iutGrig`MHmFyDyClAwGaGgQsC{DTm@eFcIqE}OqBeDoCkBqJ{AiMcKuCe@eCf@e@d@';
-  PathDrawingState state;
+  late PathDrawingState state;
 
   setUp(() async {
     state = PathDrawingState(mapRepository: repository);

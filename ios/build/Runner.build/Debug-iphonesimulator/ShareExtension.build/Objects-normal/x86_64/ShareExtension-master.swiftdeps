@@ -1,0 +1,5 @@
+version: "Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)"
+options: "e37de085600974075e1831fae78b758b"
+build_time: [1622419620, 126980000]
+inputs:
+  "/Users/kirpal/Projects/snap_path/ios/ShareExtension/ShareViewController.swift": [1616858165, 238839652]

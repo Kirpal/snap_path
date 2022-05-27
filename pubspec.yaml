@@ -3,41 +3,69 @@ description: An app to measure and create running routes
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  auto_size_text: ^2.1.0
-  bloc: ^7.0.0
+  bounding_box:
+    path: packages/bounding_box
+  dynamic_link_initial_route_client:
+    path: packages/dynamic_link_initial_route_client
+  elevation_repository:
+    path: packages/elevation_repository
+  initial_route_client:
+    path: packages/initial_route_client
+  location_client:
+    path: packages/location_client
+  mapbox_api_client:
+    path: packages/mapbox_api_client
+  route:
+    path: packages/route
+  route_repository:
+    path: packages/route_repository
+  saved_route_repository:
+    path: packages/saved_route_repository
+  search_repository:
+    path: packages/search_repository
+  shared_file_initial_route_client:
+    path: packages/shared_file_initial_route_client
+  flutter_map:
+    git:
+      url: https://github.com/fleaflet/flutter_map
+      ref: issues/829-nullsafety
+  async: ^2.5.0
+  auto_size_text: ^3.0.0-nullsafety.0
   breakpoint: ^1.0.1+2
-  charts_flutter: ^0.9.0
-  distance: ^0.1.1
-  equatable: ^1.2.0
-  firebase_dynamic_links: ^0.5.1
-  flutter_feather_icons: ^1.0.3
-  flutter_map: ^0.10.1
-  flutter_svg: ^0.17.0
-  gpx: ^0.0.3
-  http: ^0.12.1
-  latlong: ^0.6.1
-  location: ^3.0.2
+  charts_flutter: ^0.11.0
+  equatable: ^2.0.0
+  flutter_bloc: ^7.0.0
+  flutter_feather_icons: ^2.0.0+1
+  flutter_svg: ^0.22.0
+  freezed_annotation: ^0.14.2
+  gap: ^2.0.0
+  intl: ^0.17.0
   meta: ^1.3.0
-  path_drawing: ^0.4.1
+  path_drawing: ^0.5.0
   polyline: ^1.0.2
-  provider: ^4.1.2
-  receive_sharing_intent: ^1.4.0+2
-  rxdart: ^0.26.0
-  shared_preferences: ">=0.5.7+3 <2.0.0"
-  solid_bottom_sheet: ^0.1.9
-  url_launcher: ^5.4.10
-  wc_flutter_share: ^0.2.2
+  provider: ^5.0.0
+  replay_bloc: ^0.0.2
+  rxdart: ^0.27.0
+  shared_preferences: ^2.0.5
+  solid_bottom_sheet: ^0.1.10
+  url_launcher: ^6.0.3
+  wc_flutter_share: ^0.4.0
+
+dependency_overrides:
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.5
-  flutter_native_splash: ^0.1.9
+  build_runner: ^2.0.3
+  flutter_launcher_icons: ^0.9.0
+  flutter_native_splash: ^1.1.8+4
+  freezed: ^0.14.2
   mockito: ^4.1.1
   very_good_analysis: ^1.0.4
 

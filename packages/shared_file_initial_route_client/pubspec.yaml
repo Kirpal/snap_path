@@ -1,0 +1,24 @@
+name: shared_file_initial_route_client
+description: A client for handling initial routes coming from shared files (gpx)
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  initial_route_client:
+    path: ../initial_route_client
+  route:
+    path: ../route
+  gpx:
+    git: https://github.com/kirpal/dart-gpx
+  receive_sharing_intent: ^1.4.5
+  rxdart: ^0.27.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^1.0.4

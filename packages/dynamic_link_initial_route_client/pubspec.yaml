@@ -1,0 +1,22 @@
+name: dynamic_link_initial_route_client
+description: An client for handling initial routes coming from dynamic links
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_dynamic_links: ^2.0.1
+  initial_route_client:
+    path: ../initial_route_client
+  route:
+    path: ../route
+  rxdart: ^0.27.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^1.0.4
